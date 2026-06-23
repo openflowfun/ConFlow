@@ -6,12 +6,18 @@
   <title>ConFlow – One Tool, Every Job, Done Smarter</title>
   <meta property="og:title" content="ConFlow – All-in-One Platform for Builders" />
   <meta property="og:description" content="Fast invoices, progress claims, crew scheduling, variations, compliance and more. Built for Kiwi builders." />
-  <meta property="og:image" content="ConFlow Logo.png" />
+  <meta property="og:image" content="https://openflowfun.github.io/ConFlow/ConFlow%20Logo.png" />
+  <meta property="og:image:secure_url" content="https://openflowfun.github.io/ConFlow/ConFlow%20Logo.png" />
   <meta property="og:image:width" content="1080" />
   <meta property="og:image:height" content="1080" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:url" content="https://openflowfun.github.io/ConFlow/" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ConFlow" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="ConFlow Logo.png" />
+  <meta name="twitter:title" content="ConFlow – All-in-One Platform for Builders" />
+  <meta name="twitter:description" content="Fast invoices, progress claims, crew scheduling, variations, compliance and more. Built for Kiwi builders." />
+  <meta name="twitter:image" content="https://openflowfun.github.io/ConFlow/ConFlow%20Logo.png" />
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -7071,7 +7077,10 @@
       if (window._dashClockInterval) clearInterval(window._dashClockInterval);
       window._dashClockInterval = setInterval(updateDashClock, 30000);
     }
-    // Always land on dashboard
+    // Always land on dashboard — force all sections hidden first, then show dashboard
+    document.querySelectorAll('.section-panel').forEach(s => s.classList.add('hidden'));
+    const dashEl = document.getElementById('section-dashboard');
+    if (dashEl) dashEl.classList.remove('hidden');
     navigateTo('dashboard');
     // Show welcome banner if firstTime flag
     maybeShowWelcomeBanner();
@@ -9291,7 +9300,13 @@
     const backdrop = document.getElementById('sidebar-backdrop');
     if (sidebar) sidebar.style.transform = '';
     if (backdrop) { backdrop.style.opacity = '0'; backdrop.style.pointerEvents = 'none'; }
+    // Scroll to top — target the actual scrollable container (main on desktop, or the overflow div on mobile)
     window.scrollTo(0, 0);
+    const mainEl = document.querySelector('main.flex-1');
+    if (mainEl) mainEl.scrollTo(0, 0);
+    const overflowEl = document.querySelector('#app-screen .overflow-y-auto');
+    if (overflowEl) overflowEl.scrollTo(0, 0);
+    if (target) target.scrollIntoView({ block: 'start', behavior: 'instant' });
   }
 
   // ═══════════════════════════════════════════
