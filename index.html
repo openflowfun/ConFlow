@@ -573,7 +573,7 @@
 <!-- ═══════════════════════════════════════════════
      AUTH SCREEN (Landing → Login / Sign Up)
 ═══════════════════════════════════════════════ -->
-<div id="auth-screen" class="fixed inset-0 z-[100] overflow-hidden">
+<div id="auth-screen" class="fixed inset-0 z-[100] overflow-y-auto">
 
   <!-- ─── LANDING VIEW (shown by default) ─── -->
   <div id="landing-view" class="landing-hero-bg landing-grid-pattern h-screen flex flex-col relative overflow-hidden">
@@ -909,7 +909,7 @@
   </div><!-- END LANDING VIEW -->
 
   <!-- ─── AUTH VIEW (shown after clicking Sign Up / Log In) ─── -->
-  <div id="auth-view" class="hidden h-screen max-h-screen overflow-y-auto flex bg-navy">
+  <div id="auth-view" class="hidden min-h-screen flex bg-navy">
 
   <!-- Left: Branding Panel (hidden on small screens) -->
   <div class="hidden lg:flex flex-col justify-between w-[480px] flex-shrink-0 bg-gradient-to-br from-navy to-[#0d3260] p-12 relative overflow-hidden">
@@ -1021,22 +1021,30 @@
   </div>
 
   <!-- Right: Auth Form -->
-  <div class="flex-1 flex items-center justify-center p-6 sm:p-10 bg-slate-50 dark:bg-slate-900 relative">
+  <div class="flex-1 flex flex-col bg-slate-50 dark:bg-slate-900 relative overflow-y-auto">
 
-    <!-- Back to landing -->
-    <button onclick="backToLanding()" class="absolute top-5 left-5 flex items-center gap-1.5 text-slate-500 hover:text-orange text-xs font-semibold transition-colors">
+    <!-- Mobile top bar: Back (left) + ConFlow logo (right) -->
+    <div class="lg:hidden flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700 flex-shrink-0 bg-slate-50 dark:bg-slate-900 sticky top-0 z-10">
+      <button onclick="backToLanding()" class="flex items-center gap-1.5 text-slate-500 hover:text-orange text-xs font-semibold transition-colors">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back
+      </button>
+      <div class="flex items-center gap-2">
+        <img src="logomark-transparent.png" alt="ConFlow" style="height:30px; width:auto; filter: drop-shadow(0 1px 6px rgba(16,185,129,0.30));" draggable="false">
+        <img src="ConFlow-Wordmark.png" alt="ConFlow" style="height:16px; width:auto; display:block; align-self:flex-start;" draggable="false">
+      </div>
+    </div>
+
+    <!-- Desktop back button -->
+    <button onclick="backToLanding()" class="hidden lg:flex absolute top-5 left-5 items-center gap-1.5 text-slate-500 hover:text-orange text-xs font-semibold transition-colors">
       <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back
     </button>
 
+    <!-- Form centred on desktop, top-aligned on mobile -->
+    <div class="flex-1 flex items-start lg:items-center justify-center p-5 sm:p-8 lg:p-10">
     <div class="w-full max-w-md">
 
-      <!-- Mobile logo — sits below the absolute Back button -->
-      <div class="flex items-center mt-10 mb-6 lg:hidden">
-        <img src="logomark-transparent.png" alt="ConFlow" style="height:40px; width:auto; filter: drop-shadow(0 1px 6px rgba(16,185,129,0.25));" draggable="false">
-      </div>
-
       <!-- Tab Toggle: Login / Sign Up -->
-      <div class="flex bg-slate-200 dark:bg-slate-700 rounded-2xl p-1 mb-8">
+      <div class="flex bg-slate-200 dark:bg-slate-700 rounded-2xl p-1 mb-5">
         <button id="auth-login-tab" onclick="switchAuthTab('login')"
                 class="flex-1 py-2.5 text-sm font-bold rounded-xl bg-white dark:bg-slate-800 text-navy dark:text-white shadow-sm transition-all">
           Log In
@@ -1049,8 +1057,8 @@
 
       <!-- LOGIN FORM -->
       <div id="auth-login-form">
-        <h2 class="text-2xl font-extrabold text-navy dark:text-white mb-1">Welcome back 👷</h2>
-        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Log in to your company account</p>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-navy dark:text-white mb-1">Welcome back 👷</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mb-3">Log in to your company account</p>
 
         <!-- Demo credentials hint -->
         <div id="demo-hint" class="mb-4 p-3 rounded-xl bg-orange/10 border border-orange/30 flex items-center gap-2.5">
@@ -1090,8 +1098,8 @@
 
       <!-- SIGN UP FORM -->
       <div id="auth-signup-form" class="hidden">
-        <h2 class="text-2xl font-extrabold text-navy dark:text-white mb-1">Create your account 🚀</h2>
-        <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Set up your company on ConFlow</p>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-navy dark:text-white mb-1">Create your account 🚀</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Set up your company on ConFlow</p>
         <div id="auth-signup-error" class="hidden mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm font-medium"></div>
         <div class="space-y-4">
           <div class="grid grid-cols-2 gap-3">
@@ -1145,8 +1153,9 @@
         </button>
         <p class="text-center text-[11px] text-slate-400 mt-6">🇳🇿 Built for Christchurch Builders · ConFlow v1.0</p>
       </div>
-    </div>
-  </div>
+    </div><!-- end max-w-md -->
+    </div><!-- end flex-1 centred wrapper -->
+  </div><!-- end right form panel -->
 
   </div><!-- END AUTH VIEW -->
 </div>
