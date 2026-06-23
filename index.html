@@ -2313,10 +2313,20 @@
                 <th class="px-3 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-700" id="inv-tbody">
+              <!-- Empty state shown for real users with no invoices -->
+              <tr id="inv-empty-row">
+                <td colspan="6" class="px-5 py-10 text-center">
+                  <div class="flex flex-col items-center gap-2 text-slate-400">
+                    <i data-lucide="file-text" class="w-8 h-8 opacity-30"></i>
+                    <p class="text-sm font-semibold">No invoices yet</p>
+                    <p class="text-xs">Click <strong class="text-orange">+ New Invoice</strong> to create your first one</p>
+                  </div>
+                </td>
+              </tr>
 
               <!-- Row 1 – Overdue -->
-              <tr class="inv-row demo-only transition-colors cursor-pointer" data-tab="overdue progress">
+              <tr class="inv-row demo-only transition-colors cursor-pointer" style="display:none" data-tab="overdue progress">
                 <td class="px-5 py-3.5">
                   <div class="font-bold text-navy dark:text-white">#INV-2026-089</div>
                   <div class="text-[10px] text-slate-400">Progress Claim · Stage 2</div>
@@ -2346,7 +2356,7 @@
               </tr>
 
               <!-- Row 2 – Pending -->
-              <tr class="inv-row demo-only transition-colors cursor-pointer" data-tab="all">
+              <tr class="inv-row demo-only transition-colors cursor-pointer" style="display:none" data-tab="all">
                 <td class="px-5 py-3.5">
                   <div class="font-bold text-navy dark:text-white">#INV-2026-088</div>
                   <div class="text-[10px] text-slate-400">Tax Invoice</div>
@@ -2376,7 +2386,7 @@
               </tr>
 
               <!-- Row 3 – Paid -->
-              <tr class="inv-row demo-only transition-colors cursor-pointer" data-tab="progress">
+              <tr class="inv-row demo-only transition-colors cursor-pointer" style="display:none" data-tab="progress">
                 <td class="px-5 py-3.5">
                   <div class="font-bold text-navy dark:text-white">#INV-2026-085</div>
                   <div class="text-[10px] text-slate-400">Progress Claim · Stage 1</div>
@@ -2403,7 +2413,7 @@
               </tr>
 
               <!-- Row 4 – Retention Due -->
-              <tr class="inv-row demo-only transition-colors cursor-pointer" data-tab="all">
+              <tr class="inv-row demo-only transition-colors cursor-pointer" style="display:none" data-tab="all">
                 <td class="px-5 py-3.5">
                   <div class="font-bold text-navy dark:text-white">#INV-2026-082</div>
                   <div class="text-[10px] text-slate-400">Retention Release</div>
@@ -2430,7 +2440,7 @@
               </tr>
 
               <!-- Row 5 – Draft -->
-              <tr class="inv-row demo-only transition-colors cursor-pointer opacity-60" data-tab="all">
+              <tr class="inv-row demo-only transition-colors cursor-pointer opacity-60" style="display:none" data-tab="all">
                 <td class="px-5 py-3.5">
                   <div class="font-bold text-navy dark:text-white">#INV-2026-091</div>
                   <div class="text-[10px] text-slate-400">Tax Invoice · Draft</div>
@@ -2795,11 +2805,12 @@
                   <th id="roster-day-4" class="px-2 py-2.5 text-center text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Thu 24</th>
                   <th id="roster-day-5" class="px-2 py-2.5 text-center text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Fri 25</th>
                   <th class="px-2 py-2.5 text-center text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Role</th>
+                  <th class="px-2 py-2.5 text-center text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Clock</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
-                <!-- Helper macro: colored site chips -->
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-700" id="crew-roster-tbody">
+                <!-- Demo crew rows - hidden for real users -->
+                <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                   <td class="px-4 py-2.5"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-orange text-white font-bold text-[9px] flex items-center justify-center flex-shrink-0">MK</div><span class="font-semibold text-navy dark:text-white">Mike Kahu</span></div></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">FITZ</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">FITZ</span></td>
@@ -2807,8 +2818,9 @@
                   <td class="px-2 py-2.5 text-center"><span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">CASH</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">CASH</span></td>
                   <td class="px-2 py-2.5 text-center text-slate-500 dark:text-slate-400">Foreman</td>
+                  <td class="px-2 py-2.5 text-center"><button onclick="crewClockToggle(this,'Mike Kahu')" class="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition">Clock In</button></td>
                 </tr>
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+                <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                   <td class="px-4 py-2.5"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-[9px] flex items-center justify-center flex-shrink-0">TR</div><span class="font-semibold text-navy dark:text-white">Tom Rees</span></div></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">FITZ</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">FITZ</span></td>
@@ -2816,8 +2828,9 @@
                   <td class="px-2 py-2.5 text-center"><span class="bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">SICK</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">FITZ</span></td>
                   <td class="px-2 py-2.5 text-center text-slate-500 dark:text-slate-400">Carpenter</td>
+                  <td class="px-2 py-2.5 text-center"><button onclick="crewClockToggle(this,'Tom Rees')" class="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition">Clock In</button></td>
                 </tr>
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+                <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                   <td class="px-4 py-2.5"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-emerald-500 text-white font-bold text-[9px] flex items-center justify-center flex-shrink-0">SN</div><span class="font-semibold text-navy dark:text-white">Sam Ngata</span></div></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">CASH</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">CASH</span></td>
@@ -2825,8 +2838,9 @@
                   <td class="px-2 py-2.5 text-center"><span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">CASH</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-slate-100 dark:bg-slate-700 text-slate-500 px-1.5 py-0.5 rounded font-semibold text-[9px]">AL</span></td>
                   <td class="px-2 py-2.5 text-center text-slate-500 dark:text-slate-400">Labourer</td>
+                  <td class="px-2 py-2.5 text-center"><button onclick="crewClockToggle(this,'Sam Ngata')" class="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition">Clock In</button></td>
                 </tr>
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+                <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                   <td class="px-4 py-2.5"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-purple-500 text-white font-bold text-[9px] flex items-center justify-center flex-shrink-0">DF</div><span class="font-semibold text-navy dark:text-white">Dave Furey</span></div></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">LYTT</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">LYTT</span></td>
@@ -2834,8 +2848,9 @@
                   <td class="px-2 py-2.5 text-center"><span class="bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">LYTT</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">LYTT</span></td>
                   <td class="px-2 py-2.5 text-center text-slate-500 dark:text-slate-400">Seismic Tech</td>
+                  <td class="px-2 py-2.5 text-center"><button onclick="crewClockToggle(this,'Dave Furey')" class="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition">Clock In</button></td>
                 </tr>
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+                <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                   <td class="px-4 py-2.5"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-slate-400 text-white font-bold text-[9px] flex items-center justify-center flex-shrink-0">BP</div><span class="font-semibold text-navy dark:text-white">Ben Parata</span></div></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-slate-100 dark:bg-slate-700 text-slate-500 px-1.5 py-0.5 rounded font-semibold text-[9px]">AL</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">FITZ</span></td>
@@ -2843,6 +2858,17 @@
                   <td class="px-2 py-2.5 text-center"><span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">FITZ</span></td>
                   <td class="px-2 py-2.5 text-center"><span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded font-semibold text-[9px]">FITZ</span></td>
                   <td class="px-2 py-2.5 text-center text-slate-500 dark:text-slate-400">Carpenter</td>
+                  <td class="px-2 py-2.5 text-center"><button onclick="crewClockToggle(this,'Ben Parata')" class="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition">Clock In</button></td>
+                </tr>
+                <!-- Empty state for real users -->
+                <tr id="crew-empty-row">
+                  <td colspan="8" class="px-5 py-10 text-center">
+                    <div class="flex flex-col items-center gap-2 text-slate-400">
+                      <i data-lucide="users" class="w-8 h-8 opacity-30"></i>
+                      <p class="text-sm font-semibold">No crew members yet</p>
+                      <p class="text-xs">Click <strong class="text-orange">+ Add Crew Member</strong> to build your roster</p>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -3006,17 +3032,21 @@
                 <h3 class="font-bold text-navy dark:text-white text-sm flex items-center gap-2"><i data-lucide="activity" class="w-4 h-4 text-orange"></i> Recent Events</h3>
               </div>
               <div id="ts-events" class="divide-y divide-slate-100 dark:divide-slate-700 text-xs">
-                <div class="px-4 py-3 flex items-center gap-3">
+                <div class="demo-only px-4 py-3 flex items-center gap-3" style="display:none">
                   <div class="w-7 h-7 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0"><i data-lucide="log-in" class="w-3.5 h-3.5 text-emerald-600"></i></div>
                   <div class="flex-1"><p class="font-semibold text-navy dark:text-white">Mike Kahu clocked in</p><p class="text-slate-400">Fitzgerald Ave · 7:02am</p></div>
                 </div>
-                <div class="px-4 py-3 flex items-center gap-3">
+                <div class="demo-only px-4 py-3 flex items-center gap-3" style="display:none">
                   <div class="w-7 h-7 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0"><i data-lucide="log-in" class="w-3.5 h-3.5 text-emerald-600"></i></div>
                   <div class="flex-1"><p class="font-semibold text-navy dark:text-white">Dave Furey clocked in</p><p class="text-slate-400">Lyttelton Seismic · 7:15am</p></div>
                 </div>
-                <div class="px-4 py-3 flex items-center gap-3">
+                <div class="demo-only px-4 py-3 flex items-center gap-3" style="display:none">
                   <div class="w-7 h-7 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0"><i data-lucide="log-out" class="w-3.5 h-3.5 text-red-500"></i></div>
                   <div class="flex-1"><p class="font-semibold text-navy dark:text-white">Sam Ngata clocked out</p><p class="text-slate-400">Cashmere Hills · 3:30pm</p></div>
+                </div>
+                <div id="ts-events-empty" class="px-4 py-6 text-center text-slate-400 text-xs">
+                  <i data-lucide="activity" class="w-5 h-5 mx-auto mb-1 opacity-30"></i>
+                  <p>No clock events yet</p>
                 </div>
               </div>
             </div>
@@ -3086,8 +3116,8 @@
                 <th class="px-3 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
-              <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-700" id="var-tbody">
+              <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                 <td class="px-5 py-3 font-bold text-navy dark:text-white">#VAR-026</td>
                 <td class="px-3 py-3"><div class="font-semibold text-slate-700 dark:text-slate-200 text-xs">Extra retaining wall - north boundary</div><div class="text-[10px] text-slate-400">Scope increase due to soil conditions</div></td>
                 <td class="px-3 py-3 text-xs text-slate-600 dark:text-slate-400">Fitzgerald Ave</td>
@@ -3096,7 +3126,7 @@
                 <td class="px-3 py-3"><span class="status-badge bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400"><i data-lucide="clock" class="w-3 h-3"></i> Pending</span></td>
                 <td class="px-3 py-3"><div class="flex gap-1.5"><button onclick="showToast('Reminder sent to client!','slate')" class="text-[11px] font-semibold bg-navy dark:bg-slate-700 text-white px-2.5 py-1 rounded-lg hover:opacity-80 transition">Remind</button><button onclick="fireConfetti();showToast('Variation approved!','green')" class="text-[11px] font-semibold bg-emerald-500 text-white px-2.5 py-1 rounded-lg hover:bg-emerald-600 transition">Approve</button></div></td>
               </tr>
-              <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+              <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                 <td class="px-5 py-3 font-bold text-navy dark:text-white">#VAR-025</td>
                 <td class="px-3 py-3"><div class="font-semibold text-slate-700 dark:text-slate-200 text-xs">Upgraded kitchen joinery - client request</div><div class="text-[10px] text-slate-400">Change from laminate to solid timber</div></td>
                 <td class="px-3 py-3 text-xs text-slate-600 dark:text-slate-400">Fitzgerald Ave</td>
@@ -3105,7 +3135,7 @@
                 <td class="px-3 py-3"><span class="status-badge bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400"><i data-lucide="clock" class="w-3 h-3"></i> Pending</span></td>
                 <td class="px-3 py-3"><div class="flex gap-1.5"><button onclick="showToast('Reminder sent!','slate')" class="text-[11px] font-semibold bg-navy dark:bg-slate-700 text-white px-2.5 py-1 rounded-lg hover:opacity-80 transition">Remind</button><button onclick="fireConfetti();showToast('Approved!','green')" class="text-[11px] font-semibold bg-emerald-500 text-white px-2.5 py-1 rounded-lg hover:bg-emerald-600 transition">Approve</button></div></td>
               </tr>
-              <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+              <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                 <td class="px-5 py-3 font-bold text-navy dark:text-white">#VAR-024</td>
                 <td class="px-3 py-3"><div class="font-semibold text-slate-700 dark:text-slate-200 text-xs">Additional fire sprinkler heads - 12 units</div><div class="text-[10px] text-slate-400">Required by fire engineer review</div></td>
                 <td class="px-3 py-3 text-xs text-slate-600 dark:text-slate-400">Cashmere Hills</td>
@@ -3114,7 +3144,7 @@
                 <td class="px-3 py-3"><span class="status-badge bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"><i data-lucide="check-circle" class="w-3 h-3"></i> Approved</span></td>
                 <td class="px-3 py-3"><span class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">✓ Invoiced</span></td>
               </tr>
-              <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+              <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                 <td class="px-5 py-3 font-bold text-navy dark:text-white">#VAR-023</td>
                 <td class="px-3 py-3"><div class="font-semibold text-slate-700 dark:text-slate-200 text-xs">Seismic anchor bolt upgrade - grade 8.8</div><div class="text-[10px] text-slate-400">Engineer spec change post-consent</div></td>
                 <td class="px-3 py-3 text-xs text-slate-600 dark:text-slate-400">Lyttelton Seismic</td>
@@ -3123,7 +3153,7 @@
                 <td class="px-3 py-3"><span class="status-badge bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400"><i data-lucide="clock" class="w-3 h-3"></i> Pending</span></td>
                 <td class="px-3 py-3"><div class="flex gap-1.5"><button onclick="showToast('Reminder sent!','slate')" class="text-[11px] font-semibold bg-navy dark:bg-slate-700 text-white px-2.5 py-1 rounded-lg hover:opacity-80 transition">Remind</button><button onclick="fireConfetti();showToast('Approved!','green')" class="text-[11px] font-semibold bg-emerald-500 text-white px-2.5 py-1 rounded-lg hover:bg-emerald-600 transition">Approve</button></div></td>
               </tr>
-              <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+              <tr class="demo-only hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors" style="display:none">
                 <td class="px-5 py-3 font-bold text-navy dark:text-white">#VAR-022</td>
                 <td class="px-3 py-3"><div class="font-semibold text-slate-700 dark:text-slate-200 text-xs">Deck extension - 12m² additional area</div><div class="text-[10px] text-slate-400">Client changed mind post-consent</div></td>
                 <td class="px-3 py-3 text-xs text-slate-600 dark:text-slate-400">Sumner Beach</td>
@@ -3131,6 +3161,16 @@
                 <td class="px-3 py-3 font-bold text-navy dark:text-white text-xs">$8,200</td>
                 <td class="px-3 py-3"><span class="status-badge bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"><i data-lucide="check-circle" class="w-3 h-3"></i> Approved</span></td>
                 <td class="px-3 py-3"><span class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">✓ Invoiced</span></td>
+              </tr>
+              <!-- Empty state for real users -->
+              <tr id="var-empty-row">
+                <td colspan="7" class="px-5 py-10 text-center">
+                  <div class="flex flex-col items-center gap-2 text-slate-400">
+                    <i data-lucide="git-branch" class="w-8 h-8 opacity-30"></i>
+                    <p class="text-sm font-semibold">No variations yet</p>
+                    <p class="text-xs">Click <strong class="text-orange">+ New Variation</strong> to log a scope change</p>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -6783,14 +6823,18 @@
   }
   function renderUserCrew() {
     document.querySelectorAll('.user-crew-row').forEach(r => r.remove());
-    if (!crewData.length) return;
-    const tbody = document.querySelector('#section-scheduling table tbody');
+    const emptyRow = document.getElementById('crew-empty-row');
+    if (!crewData.length) { if (emptyRow) emptyRow.style.display = ''; return; }
+    if (emptyRow) emptyRow.style.display = 'none';
+    const tbody = document.getElementById('crew-roster-tbody');
     if (!tbody) return;
     crewData.forEach(m => {
       const initials = m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
       const chip = crewSiteChip(m.site);
+      const clockedIn = m.clockedIn || false;
       const tr = document.createElement('tr');
       tr.className = 'user-crew-row hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors';
+      tr.dataset.crewId = m.id;
       tr.innerHTML = `
         <td class="px-4 py-2.5">
           <div class="flex items-center gap-2">
@@ -6804,16 +6848,67 @@
         <td class="px-2 py-2.5 text-center">${chip}</td>
         <td class="px-2 py-2.5 text-center">${chip}</td>
         <td class="px-2 py-2.5 text-center">${chip}</td>
-        <td class="px-2 py-2.5 text-center text-slate-500 dark:text-slate-400">${m.role}</td>`;
+        <td class="px-2 py-2.5 text-center text-slate-500 dark:text-slate-400 text-xs">${m.role||'-'}</td>
+        <td class="px-2 py-2.5 text-center">
+          <button onclick="crewClockToggle(this,'${m.name}',${m.id})"
+            class="text-[10px] font-bold px-2.5 py-1 rounded-lg transition ${clockedIn ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-emerald-500 hover:bg-emerald-600 text-white'}">
+            ${clockedIn ? 'Clock Out' : 'Clock In'}
+          </button>
+        </td>`;
       tbody.appendChild(tr);
     });
+    lucide.createIcons();
+  }
+
+  // ── Clock in/out toggle ──────────────────────
+  function crewClockToggle(btn, name, id) {
+    const clockedIn = btn.textContent.trim() === 'Clock Out';
+    const now = new Date().toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit',timeZone:'Pacific/Auckland'});
+    if (clockedIn) {
+      btn.textContent = 'Clock In';
+      btn.className = btn.className.replace('bg-red-500 hover:bg-red-600','bg-emerald-500 hover:bg-emerald-600');
+      showToast(`${name} clocked out at ${now}`, 'slate');
+    } else {
+      btn.textContent = 'Clock Out';
+      btn.className = btn.className.replace('bg-emerald-500 hover:bg-emerald-600','bg-red-500 hover:bg-red-600');
+      showToast(`${name} clocked in at ${now} ✅`, 'green');
+    }
+    // Log the event
+    const eventsEl = document.getElementById('ts-events');
+    const emptyEvt = document.getElementById('ts-events-empty');
+    if (emptyEvt) emptyEvt.style.display = 'none';
+    if (eventsEl) {
+      const div = document.createElement('div');
+      div.className = 'px-4 py-3 flex items-center gap-3 text-xs';
+      div.innerHTML = `
+        <div class="w-7 h-7 rounded-full ${clockedIn ? 'bg-red-100 dark:bg-red-900/30' : 'bg-emerald-100 dark:bg-emerald-900/30'} flex items-center justify-center flex-shrink-0">
+          <i data-lucide="${clockedIn ? 'log-out' : 'log-in'}" class="w-3.5 h-3.5 ${clockedIn ? 'text-red-500' : 'text-emerald-600'}"></i>
+        </div>
+        <div class="flex-1">
+          <p class="font-semibold text-navy dark:text-white">${name} clocked ${clockedIn ? 'out' : 'in'}</p>
+          <p class="text-slate-400">${now} NZT</p>
+        </div>`;
+      eventsEl.prepend(div);
+      lucide.createIcons();
+    }
+    // Persist clock state
+    if (id !== undefined) {
+      const m = crewData.find(x => x.id === id);
+      if (m) { m.clockedIn = !clockedIn; markDirty(); }
+    }
+    // Update clocked-in stat
+    const clockedCount = crewData.filter(x => x.clockedIn).length;
+    const el = document.getElementById('ts-clocked-in');
+    if (el) el.textContent = clockedCount;
   }
 
   // ── Variations render ────────────────────────
   function renderUserVariations() {
     document.querySelectorAll('.user-var-row').forEach(r => r.remove());
-    if (!variationsData.length) return;
-    const tbody = document.querySelector('#section-variations table tbody');
+    const emptyRow = document.getElementById('var-empty-row');
+    if (!variationsData.length) { if (emptyRow) emptyRow.style.display = ''; return; }
+    if (emptyRow) emptyRow.style.display = 'none';
+    const tbody = document.getElementById('var-tbody');
     if (!tbody) return;
     variationsData.forEach(v => {
       const tr = document.createElement('tr');
@@ -6853,8 +6948,10 @@
   // ── Invoices render ──────────────────────────
   function renderUserInvoices() {
     document.querySelectorAll('.user-inv-row').forEach(r => r.remove());
-    if (!invoicesData.length) return;
-    const tbody = document.querySelector('#section-invoices table tbody');
+    const emptyRow = document.getElementById('inv-empty-row');
+    if (!invoicesData.length) { if (emptyRow) emptyRow.style.display = ''; return; }
+    if (emptyRow) emptyRow.style.display = 'none';
+    const tbody = document.getElementById('inv-tbody');
     if (!tbody) return;
     invoicesData.forEach(inv => {
       const tr = document.createElement('tr');
