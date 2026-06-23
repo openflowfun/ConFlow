@@ -371,6 +371,14 @@
     /* Landing is always exactly one viewport — no scroll */
     #landing-view { height: 100dvh; max-height: 100dvh; overflow: hidden; }
 
+    /* Mobile: scale down the landing content so everything fits on screen */
+    @media (max-width: 639px) {
+      #landing-view main > div {
+        transform: scale(0.78);
+        transform-origin: top center;
+      }
+    }
+
     /* ── Landing: cascading letter entrance for "ConFlow" ── */
     .flow-letter {
       display: inline-block;
@@ -581,7 +589,7 @@
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="showAuthView('login')" class="text-white font-bold text-sm px-5 py-2 rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 transition-all">Log In</button>
+        <button onclick="showAuthView('login')" class="text-white font-bold text-xs sm:text-sm px-3 sm:px-5 py-1.5 sm:py-2 rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 transition-all whitespace-nowrap">Log In</button>
       </div>
     </header>
 
@@ -637,17 +645,17 @@
             <p class="font-semibold mb-1" style="color:rgba(255,255,255,0.65); font-size:clamp(0.9rem,1.6vw,1.1rem);">Daily Operations Hub for Builders.</p>
             <p class="mb-3" style="color:rgba(255,255,255,0.35); font-size:0.85rem;">Built for the way Kiwi Builders work.</p>
 
-            <!-- CTA buttons — always centered -->
-            <div class="flex flex-row gap-3 items-center justify-center mb-2.5">
+            <!-- CTA buttons — always one row -->
+            <div class="flex flex-row gap-2 sm:gap-3 items-center justify-center mb-2.5">
               <button onclick="showAuthView('signup')"
-                      class="btn-orange px-7 py-3.5 rounded-2xl text-white font-extrabold text-base shadow-2xl shadow-orange/40 flex items-center gap-2">
-                <i data-lucide="rocket" class="w-5 h-5"></i>
+                      class="btn-orange px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-2xl text-white font-extrabold text-sm sm:text-base shadow-2xl shadow-orange/40 flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
+                <i data-lucide="rocket" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                 Sign Up Free
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
               </button>
               <button onclick="showAuthView('login')"
-                      class="px-7 py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-bold text-base border border-white/20 backdrop-blur-sm transition-all flex items-center gap-2">
-                <i data-lucide="log-in" class="w-5 h-5"></i>
+                      class="px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-bold text-sm sm:text-base border border-white/20 backdrop-blur-sm transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
+                <i data-lucide="log-in" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                 Log In
               </button>
             </div>
@@ -748,11 +756,11 @@
           <button onclick="openLegalModal('privacy')" class="hover:text-orange transition-colors font-medium">Privacy Policy</button>
           <button onclick="openLegalModal('terms')"   class="hover:text-orange transition-colors font-medium">Terms of Service</button>
         </div>
-        <span class="flex items-center gap-1.5">
+        <a href="https://openflow.fun" target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
           <span class="text-white/30">Built by</span>
           <span class="openflow-brand-text font-bold">OpenFlow</span>
           <span class="nz-flag-big" aria-hidden="true">🇳🇿</span>
-        </span>
+        </a>
       </div>
     </footer>
 
