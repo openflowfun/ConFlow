@@ -889,6 +889,53 @@
 
   </div><!-- END LANDING VIEW -->
 
+  <!-- ─── BETA GATE (shown before auth, cleared once per session) ─── -->
+  <div id="beta-gate" class="hidden flex-col min-h-screen bg-[#050f1e] items-center justify-center relative overflow-hidden">
+    <!-- ambient glow -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange/8 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative z-10 flex flex-col items-center justify-center flex-1 px-6 py-12 w-full">
+      <!-- Wordmark only, centred, large -->
+      <div class="flex items-center justify-center mb-10">
+        <img src="ConFlow-Wordmark.png" alt="ConFlow" style="height:32px;width:auto;display:block;filter:drop-shadow(0 2px 8px rgba(255,98,0,0.4)) brightness(10);" draggable="false">
+      </div>
+      <!-- Card -->
+      <div class="w-full max-w-sm rounded-3xl p-8 shadow-2xl" style="background:rgba(13,31,56,0.95);border:1px solid rgba(255,255,255,0.12);">
+        <div class="text-center mb-7">
+          <div class="inline-flex items-center justify-center w-13 h-13 rounded-2xl mb-4" style="background:rgba(255,98,0,0.18);">
+            <i data-lucide="key-round" class="w-6 h-6" style="color:#FF6200;"></i>
+          </div>
+          <h1 style="color:#ffffff;font-size:1.4rem;font-weight:800;margin-bottom:6px;letter-spacing:-0.01em;">Beta Access</h1>
+          <p style="color:rgba(255,255,255,0.55);font-size:0.88rem;line-height:1.5;">Enter your access code to unlock ConFlow.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <input id="beta-code-input" type="text" placeholder="Enter your access code"
+            autocomplete="off" spellcheck="false"
+            style="width:100%;box-sizing:border-box;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.18);color:#ffffff;font-size:0.9rem;font-family:monospace;text-align:center;letter-spacing:0.12em;outline:none;transition:border-color 0.2s;"
+            oninput="this.value=this.value.replace(/[^A-Za-z0-9\-#]/g,'')"
+            onfocus="this.style.borderColor='#FF6200'"
+            onblur="this.style.borderColor='rgba(255,255,255,0.18)'"
+            onkeydown="if(event.key==='Enter')submitBetaCode()">
+          <div id="beta-error" class="hidden" style="color:#f87171;font-size:0.78rem;text-align:center;padding:8px 12px;background:rgba(239,68,68,0.1);border-radius:10px;border:1px solid rgba(239,68,68,0.25);"></div>
+          <button onclick="submitBetaCode()" class="btn-orange" style="width:100%;color:#fff;font-weight:700;padding:14px;border-radius:12px;font-size:0.9rem;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:0.01em;">
+            <i data-lucide="unlock" class="w-4 h-4"></i> Unlock Access
+          </button>
+        </div>
+        <p style="color:rgba(255,255,255,0.25);font-size:0.75rem;text-align:center;margin-top:20px;line-height:1.5;">Don't have a code? Contact your ConFlow representative.</p>
+      </div>
+      <!-- Back -->
+      <button onclick="betaGateBack()" style="margin-top:24px;color:rgba(255,255,255,0.35);font-size:0.78rem;font-weight:500;display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.65)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to home
+      </button>
+    </div>
+    <!-- Subtle admin link bottom-right -->
+    <div class="absolute bottom-4 right-5">
+      <button onclick="openAdminPanel()" class="text-white/10 hover:text-white/35 text-[10px] transition-colors px-2 py-1">Admin</button>
+    </div>
+  </div><!-- END BETA GATE -->
+
   <!-- ─── AUTH VIEW (shown after clicking Sign Up / Log In) ─── -->
   <div id="auth-view" class="hidden min-h-screen flex bg-navy">
 
@@ -1157,6 +1204,48 @@
       </button>
     </div>
     <div id="legal-modal-body" class="overflow-y-auto px-7 py-6 flex-1 text-white/75 text-sm leading-relaxed space-y-5"></div>
+  </div>
+</div>
+
+<!-- ── Admin Panel Modal ── -->
+<div id="admin-panel" class="hidden fixed inset-0 z-[700] bg-black/85 backdrop-blur-md flex items-end sm:items-center justify-center p-4">
+  <div class="bg-[#0d1f38] border border-white/10 rounded-3xl shadow-2xl w-full max-w-md">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-white/10">
+      <div class="flex items-center gap-2.5">
+        <i data-lucide="shield-check" class="w-5 h-5 text-orange"></i>
+        <h2 class="text-white font-extrabold text-base">Admin Panel</h2>
+      </div>
+      <button onclick="closeAdminPanel()" class="p-1.5 rounded-xl text-white/40 hover:text-white hover:bg-white/10 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <!-- Password gate -->
+    <div id="admin-auth-section" class="p-6">
+      <p class="text-white/55 text-sm mb-4 leading-relaxed">Enter your admin password to generate beta access codes for clients.</p>
+      <div class="flex gap-2">
+        <input id="admin-pwd-input" type="password" placeholder="Admin password"
+          class="flex-1 px-4 py-3 rounded-xl bg-white/8 border border-white/15 text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-orange/50 transition"
+          onkeydown="if(event.key==='Enter')adminUnlock()">
+        <button onclick="adminUnlock()" class="px-5 py-3 btn-orange text-white font-bold rounded-xl text-sm whitespace-nowrap">Unlock</button>
+      </div>
+      <div id="admin-pwd-error" class="hidden mt-2 text-red-400 text-xs text-center py-1.5 bg-red-500/10 rounded-xl">Incorrect password</div>
+    </div>
+    <!-- Code generator (shown after unlock) -->
+    <div id="admin-tool-section" class="hidden p-6 space-y-4">
+      <div class="bg-orange/10 border border-orange/20 rounded-2xl px-4 py-3">
+        <p class="text-orange/90 text-xs leading-relaxed">Each code is valid for <strong>15 minutes</strong> from generation. Copy and send to your client immediately — it expires automatically.</p>
+      </div>
+      <button onclick="adminGenerateCode()" class="w-full btn-orange text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+        <i data-lucide="plus-circle" class="w-4 h-4"></i> Generate New Code
+      </button>
+      <div id="admin-codes-list" class="space-y-2 max-h-60 overflow-y-auto"></div>
+      <div class="pt-2 border-t border-white/10 flex items-center justify-between">
+        <button onclick="adminLock()" class="text-white/40 hover:text-white/70 text-xs transition-colors flex items-center gap-1.5">
+          <i data-lucide="lock" class="w-3 h-3"></i> Lock &amp; close
+        </button>
+        <span class="text-white/20 text-[10px]">Codes are one-time use · 15min expiry</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -4005,7 +4094,7 @@
     </section>
 
     <!-- ═══════════════════════════════════════
-         CONSTRUCTFLOW AI SECTION
+         CONFLOW AI SECTION
     ═══════════════════════════════════════ -->
     <section id="section-cfai" class="section-panel hidden p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
       <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -6277,16 +6366,311 @@
   }
 
   // ── Landing ↔ Auth view swap ────────────────
+  // ═══════════════════════════════════════════
+  //  BETA ACCESS SYSTEM
+  // ═══════════════════════════════════════════
+  const CF_BETA_SECRET = 'cfnz2026beta'; // Change this to customise your secret
+  const CF_ADMIN_PWD   = 'ConFlow2026';  // Change this to your admin password
+
+  function cfHash(str) {
+    let h = 0x811c9dc5;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    return h;
+  }
+
+  function generateBetaCode() {
+    const expires = Date.now() + 15 * 60 * 1000; // 15 minutes
+    const nonce   = Math.random().toString(36).substr(2, 4).toUpperCase();
+    const expB36  = expires.toString(36).toUpperCase();
+    const sig     = cfHash(expires + CF_BETA_SECRET + nonce).toString(36).substr(0, 4).toUpperCase();
+    return `CF-${nonce}-${expB36}-${sig}`;
+  }
+
+  function validateBetaCode(input) {
+    const code  = input.trim(); // keep original case for fixed code check
+    // ── Fixed beta access code (shared with all beta clients) ──
+    if (code === 'CF26#' || code.toUpperCase() === 'CF26#') return { ok: true };
+    const upperCode = code.toUpperCase();
+    const parts = upperCode.split('-');
+    if (parts.length !== 4 || parts[0] !== 'CF') return { ok: false, msg: 'Invalid code format.' };
+    const nonce  = parts[1];
+    const expB36 = parts[2];
+    const sig    = parts[3];
+    const expires = parseInt(expB36, 36);
+    if (isNaN(expires) || expires < 1000000000000) return { ok: false, msg: 'Invalid code.' };
+    if (Date.now() > expires) return { ok: false, msg: 'Code has expired. Ask for a new one.' };
+    const expectedSig = cfHash(expires + CF_BETA_SECRET + nonce).toString(36).substr(0, 4).toUpperCase();
+    if (sig !== expectedSig) return { ok: false, msg: 'Invalid code.' };
+    // Mark used (prevents accidental double-use in same browser)
+    const used = JSON.parse(localStorage.getItem('cf-beta-used') || '[]');
+    if (used.includes(upperCode)) return { ok: false, msg: 'Code already used.' };
+    used.push(upperCode);
+    localStorage.setItem('cf-beta-used', JSON.stringify(used));
+    return { ok: true };
+  }
+
+  let _pendingAuthTab    = 'login';
+  let _pendingDemoPrefill = false;
+
   function showAuthView(tab, demoPrefill) {
+    _pendingAuthTab     = tab || 'login';
+    _pendingDemoPrefill = !!demoPrefill;
+    // If beta already cleared this session, go straight to auth
+    if (sessionStorage.getItem('cf-beta-cleared') === '1') {
+      _showAuthDirect();
+    } else {
+      document.getElementById('landing-view').classList.add('hidden');
+      const gate = document.getElementById('beta-gate');
+      gate.classList.remove('hidden');
+      gate.classList.add('flex');
+      document.getElementById('beta-code-input').value = '';
+      document.getElementById('beta-error').classList.add('hidden');
+      lucide.createIcons();
+    }
+  }
+
+  function _showAuthDirect() {
     document.getElementById('landing-view').classList.add('hidden');
+    const gate = document.getElementById('beta-gate');
+    gate.classList.add('hidden');
+    gate.classList.remove('flex');
     document.getElementById('auth-view').classList.remove('hidden');
-    switchAuthTab(tab || 'login');
-    if (demoPrefill) fillDemoCreds();
+    switchAuthTab(_pendingAuthTab);
+    if (_pendingDemoPrefill) fillDemoCreds();
     lucide.createIcons();
   }
 
+  function submitBetaCode() {
+    const input  = document.getElementById('beta-code-input').value;
+    const errEl  = document.getElementById('beta-error');
+    errEl.classList.add('hidden');
+    if (!input.trim()) {
+      errEl.textContent = 'Please enter your access code.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    const result = validateBetaCode(input);
+    if (!result.ok) {
+      errEl.textContent = result.msg;
+      errEl.classList.remove('hidden');
+      document.getElementById('beta-code-input').select();
+      return;
+    }
+    // Valid — grant session access
+    sessionStorage.setItem('cf-beta-cleared', '1');
+    _showAuthDirect();
+  }
+
+  function betaGateBack() {
+    const gate = document.getElementById('beta-gate');
+    gate.classList.add('hidden');
+    gate.classList.remove('flex');
+    document.getElementById('landing-view').classList.remove('hidden');
+    lucide.createIcons();
+  }
+
+  // ── Admin Panel ──────────────────────────────
+  function openAdminPanel() {
+    adminLock(); // always start locked
+    document.getElementById('admin-panel').classList.remove('hidden');
+    lucide.createIcons();
+    setTimeout(() => document.getElementById('admin-pwd-input').focus(), 50);
+  }
+
+  function closeAdminPanel() {
+    document.getElementById('admin-panel').classList.add('hidden');
+    adminLock();
+  }
+
+  function adminUnlock() {
+    const pwd = document.getElementById('admin-pwd-input').value;
+    const errEl = document.getElementById('admin-pwd-error');
+    errEl.classList.add('hidden');
+    if (pwd === CF_ADMIN_PWD) {
+      document.getElementById('admin-auth-section').classList.add('hidden');
+      document.getElementById('admin-tool-section').classList.remove('hidden');
+      document.getElementById('admin-codes-list').innerHTML = '<p class="text-white/30 text-xs text-center py-2">No codes generated yet this session.</p>';
+      lucide.createIcons();
+    } else {
+      errEl.classList.remove('hidden');
+      document.getElementById('admin-pwd-input').value = '';
+      document.getElementById('admin-pwd-input').focus();
+    }
+  }
+
+  function adminLock() {
+    document.getElementById('admin-auth-section').classList.remove('hidden');
+    document.getElementById('admin-tool-section').classList.add('hidden');
+    document.getElementById('admin-pwd-input').value = '';
+    document.getElementById('admin-pwd-error').classList.add('hidden');
+  }
+
+  const _adminGeneratedCodes = [];
+
+  function adminGenerateCode() {
+    const code    = generateBetaCode();
+    const expires = Date.now() + 15 * 60 * 1000;
+    _adminGeneratedCodes.unshift({ code, expires });
+    renderAdminCodes();
+    // Auto-copy to clipboard
+    navigator.clipboard.writeText(code).catch(() => {});
+  }
+
+  function renderAdminCodes() {
+    const list = document.getElementById('admin-codes-list');
+    if (!_adminGeneratedCodes.length) {
+      list.innerHTML = '<p class="text-white/30 text-xs text-center py-2">No codes yet.</p>';
+      return;
+    }
+    const now = Date.now();
+    list.innerHTML = _adminGeneratedCodes.map((entry, i) => {
+      const remaining = Math.max(0, Math.round((entry.expires - now) / 1000));
+      const expired   = remaining === 0;
+      const mins = Math.floor(remaining / 60);
+      const secs = remaining % 60;
+      const timeStr = expired ? 'Expired' : `${mins}m ${secs < 10 ? '0' : ''}${secs}s`;
+      return `<div class="flex items-center gap-2 bg-white/5 border border-white/10 rounded-2xl px-3 py-2.5 ${expired ? 'opacity-40' : ''}">
+        <div class="flex-1 min-w-0">
+          <p class="text-white font-mono text-xs tracking-wider truncate">${entry.code}</p>
+          <p class="text-${expired ? 'red-400' : 'green-400'} text-[10px] mt-0.5">${timeStr}</p>
+        </div>
+        <button onclick="navigator.clipboard.writeText('${entry.code}')" title="Copy" class="flex-shrink-0 p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-colors ${expired ? 'pointer-events-none' : ''}">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>`;
+    }).join('');
+    lucide.createIcons();
+    // Refresh every second while panel open
+    if (_adminGeneratedCodes.some(e => Date.now() < e.expires)) {
+      setTimeout(() => {
+        if (!document.getElementById('admin-panel').classList.contains('hidden')) renderAdminCodes();
+      }, 1000);
+    }
+  }
+  // ═══════════════════════════════════════════
+  //  END BETA ACCESS SYSTEM
+  // ═══════════════════════════════════════════
+
+  // ═══════════════════════════════════════════
+  //  USER ACCOUNTS + DATA PERSISTENCE
+  // ═══════════════════════════════════════════
+  let _currentUserEmail = null;
+  let _dataDirty = false;
+
+  // Simple password hash (client-side, sufficient for beta)
+  function cfPwdHash(email, pwd) {
+    return cfHash(email.toLowerCase() + ':' + pwd + ':cf26').toString(36);
+  }
+
+  // Store a new account
+  function storeAccount(email, pwd, name, company, initials) {
+    const accounts = JSON.parse(localStorage.getItem('cf-accounts') || '{}');
+    accounts[email.toLowerCase()] = {
+      name, company, initials,
+      pwdHash: cfPwdHash(email, pwd)
+    };
+    localStorage.setItem('cf-accounts', JSON.stringify(accounts));
+  }
+
+  // Check credentials against stored accounts
+  function checkAccount(email, pwd) {
+    const accounts = JSON.parse(localStorage.getItem('cf-accounts') || '{}');
+    const acc = accounts[email.toLowerCase()];
+    if (!acc) return null;
+    if (acc.pwdHash !== cfPwdHash(email, pwd)) return null;
+    return acc;
+  }
+
+  // Save current in-memory data to localStorage keyed by email
+  function saveUserData(email) {
+    if (!email || email === 'demo@conflow.co.nz') return;
+    try {
+      const payload = {
+        projectsData: typeof projectsData !== 'undefined' ? projectsData : [],
+        projIdCounter: typeof projIdCounter !== 'undefined' ? projIdCounter : 1,
+        quotesData: typeof quotesData !== 'undefined' ? quotesData : [],
+        quoteIdCounter: typeof quoteIdCounter !== 'undefined' ? quoteIdCounter : 1,
+        savedAt: Date.now()
+      };
+      localStorage.setItem('cf-data-' + email.toLowerCase(), JSON.stringify(payload));
+      _dataDirty = false;
+    } catch(e) { /* storage full or unavailable */ }
+  }
+
+  // Load saved data back into memory for this user
+  function loadUserData(email) {
+    if (!email || email === 'demo@conflow.co.nz') return false;
+    clearUserData(); // start clean
+    const raw = localStorage.getItem('cf-data-' + email.toLowerCase());
+    if (!raw) return false;
+    try {
+      const d = JSON.parse(raw);
+      if (Array.isArray(d.projectsData)) {
+        projectsData    = d.projectsData;
+        projIdCounter   = d.projIdCounter || projectsData.length + 1;
+      }
+      if (Array.isArray(d.quotesData)) {
+        quotesData      = d.quotesData;
+        quoteIdCounter  = d.quoteIdCounter || quotesData.length + 1;
+      }
+      return true;
+    } catch(e) { return false; }
+  }
+
+  // Mark data as changed — triggers auto-save
+  function markDirty() {
+    _dataDirty = true;
+  }
+
+  // Auto-save every 3 seconds if dirty (real users only)
+  setInterval(() => {
+    if (_dataDirty && _currentUserEmail && _currentUserEmail !== 'demo@conflow.co.nz') {
+      saveUserData(_currentUserEmail);
+    }
+  }, 3000);
+
+  // Save immediately when user closes/leaves the page
+  window.addEventListener('beforeunload', () => {
+    if (_dataDirty && _currentUserEmail && _currentUserEmail !== 'demo@conflow.co.nz') {
+      saveUserData(_currentUserEmail);
+    }
+  });
+
+  // Refresh dashboard stat cards to reflect real (non-demo) user data
+  function refreshDashboardFromData() {
+    if (typeof projectsData === 'undefined') return;
+    // Projects empty state
+    const pe = document.getElementById('projects-empty-state');
+    if (pe) pe.style.display = projectsData.length ? 'none' : '';
+    // Quotes stat
+    if (typeof quotesData !== 'undefined' && typeof updateQuoteStats === 'function') {
+      updateQuoteStats();
+    }
+    // Project list
+    if (typeof renderProjects === 'function') {
+      renderProjects('all');
+    }
+    // Quotes list
+    if (typeof renderQuotes === 'function') {
+      renderQuotes();
+    }
+    // Update dashboard project/quote counts
+    const projCount = (typeof projectsData !== 'undefined') ? projectsData.length : 0;
+    const pe2 = document.getElementById('projects-empty-state');
+    if (pe2) pe2.style.display = projCount ? 'none' : '';
+  }
+  // ═══════════════════════════════════════════
+  //  END USER ACCOUNTS + DATA PERSISTENCE
+  // ═══════════════════════════════════════════
+
   function backToLanding() {
     document.getElementById('auth-view').classList.add('hidden');
+    const gate = document.getElementById('beta-gate');
+    gate.classList.add('hidden');
+    gate.classList.remove('flex');
     document.getElementById('landing-view').classList.remove('hidden');
     // Clear any errors
     document.getElementById('auth-login-error').classList.add('hidden');
@@ -6376,6 +6760,7 @@
   // ── Auth: Show App (shared) ──────────────────
   function enterApp(name, company, email, initials, options) {
     options = options || {};
+    if (!_currentUserEmail) _currentUserEmail = email; // fallback if not set before enterApp
     document.getElementById('auth-screen').classList.add('hidden');
     document.getElementById('app-screen').classList.remove('hidden');
     document.getElementById('app-screen').classList.add('flex');
@@ -6458,28 +6843,39 @@
     if (email.toLowerCase() === 'demo@conflow.co.nz' && pwd === '1234') {
       const user = {
         name: 'John Walker', company: 'Walker Builds Ltd',
-        email: 'demo@conflow.co.nz', initials: 'SP'
+        email: 'demo@conflow.co.nz', initials: 'JW'
       };
       localStorage.setItem('cf-user', JSON.stringify(user));
       if (localStorage.getItem('cf-onboarded') !== '1') {
         localStorage.setItem('cf-firstTime','1');
       }
+      _currentUserEmail = 'demo@conflow.co.nz';
       loadDemoData();
       enterApp(user.name, user.company, user.email, user.initials, { autoOpenOnboarding: true });
       return;
     }
 
-    // Real user login — empty dashboard
-    const rawName = email.split('@')[0].replace(/[^a-zA-Z]/g,' ').trim() || 'Builder';
-    const name = rawName.charAt(0).toUpperCase() + rawName.slice(1);
-    const initials = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) || 'CF';
-    const user = { name, company: 'My Building Ltd', email, initials };
-    localStorage.setItem('cf-user', JSON.stringify(user));
-    if (localStorage.getItem('cf-onboarded') !== '1') {
-      localStorage.setItem('cf-firstTime','1');
+    // Real user login — check stored accounts
+    const acc = checkAccount(email, pwd);
+    if (acc) {
+      const user = { name: acc.name, company: acc.company, email, initials: acc.initials };
+      localStorage.setItem('cf-user', JSON.stringify(user));
+      _currentUserEmail = email;
+      const hadData = loadUserData(email);
+      enterApp(user.name, user.company, email, user.initials, {});
+      setTimeout(() => {
+        refreshDashboardFromData();
+        if (!hadData) {
+          showToast('Welcome back, ' + (acc.name.split(' ')[0]) + '! 👋', 'orange');
+        } else {
+          showToast('Welcome back, ' + (acc.name.split(' ')[0]) + '! Your data is loaded. ✅', 'green');
+        }
+      }, 400);
+      return;
     }
-    clearUserData();
-    enterApp(name, 'My Building Ltd', email, initials, { autoOpenOnboarding: true });
+
+    errEl.textContent = 'Incorrect email or password. Please try again.';
+    errEl.classList.remove('hidden');
   }
 
   // ── Auth: Sign Up ─────────────────────────────
@@ -6509,7 +6905,10 @@
     if (!localStorage.getItem('cf-trial-start')) {
       localStorage.setItem('cf-trial-start', Date.now().toString());
     }
+    // Store account so user can log back in later
+    storeAccount(email, pwd, user.name, user.company, initials);
     clearUserData();
+    _currentUserEmail = email;
     enterApp(user.name, user.company, email, initials, { autoOpenOnboarding: false });
     fireConfetti();
     // Send signup notification email via Web3Forms
@@ -6844,6 +7243,7 @@
         desc: 'Added during onboarding'
       };
       projectsData.unshift(newProj);
+      markDirty();
       if (typeof renderProjects === 'function') renderProjects(currentProjFilter || 'all');
     }
     onbData.projectSaved = true;
@@ -7621,6 +8021,7 @@
       due:   document.getElementById('proj-due').value,
       desc:  document.getElementById('proj-desc').value.trim(),
     });
+    markDirty();
     closeProjectModal();
     renderProjects();
     fireConfetti();
@@ -7750,6 +8151,7 @@
     const totals = calcQuoteLive();
     const padId  = 'Q-' + String(100 + quoteIdCounter++).slice(1);
     quotesData.unshift({ id: padId, title, client: client||'No client', status:'draft', total: totals.total, date: new Date().toISOString().split('T')[0] });
+    markDirty();
     closeQuoteModal();
     renderQuotes();
     fireConfetti();
@@ -7902,6 +8304,7 @@
     const title  = `${currentProjType.charAt(0).toUpperCase()+currentProjType.slice(1)} ${tradeLabel} — ${days} days`;
     const padId  = 'Q-' + String(100 + quoteIdCounter++).slice(1);
     quotesData.unshift({ id: padId, title, client:'Pending', status:'draft', total, date: new Date().toISOString().split('T')[0] });
+    markDirty();
     renderQuotes();
     fireConfetti();
     showToast(`Saved as quote in Quoting Tools`, 'orange');
@@ -8142,13 +8545,14 @@
     const total  = sellEl ? parseFloat(sellEl.textContent.replace(/[$,]/g,'')) || 0 : 0;
     const padId  = 'Q-' + String(100 + quoteIdCounter++).slice(1);
     quotesData.unshift({ id: padId, title:'Margin Calc Quote', client:'Pending', status:'draft', total, date: new Date().toISOString().split('T')[0] });
+    markDirty();
     renderQuotes();
     fireConfetti();
     showToast('Saved as quote in Quoting Tools', 'orange');
   }
 
   // ═══════════════════════════════════════════
-  //  CONSTRUCTFLOW AI — Comprehensive NZ Construction Knowledge
+  //  CONFLOW AI — Comprehensive NZ Construction Knowledge
   // ═══════════════════════════════════════════
   const aiKnowledge = {
 
