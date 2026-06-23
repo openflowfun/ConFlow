@@ -887,25 +887,6 @@
     </div>
   </div>
 
-  <!-- ── Legal Modal ── -->
-  <div id="legal-modal" onclick="if(event.target===this)closeLegalModal()"
-       class="hidden fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-[#0d1f38] border border-white/10 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col">
-      <!-- Header -->
-      <div class="flex items-center justify-between px-7 py-5 border-b border-white/10 flex-shrink-0">
-        <div>
-          <h2 id="legal-modal-title" class="text-white font-extrabold text-xl"></h2>
-          <p class="text-white/40 text-xs mt-0.5">OpenFlow Ltd · Effective Date: 1 May 2026</p>
-        </div>
-        <button onclick="closeLegalModal()" class="p-2 rounded-xl text-white/50 hover:text-white hover:bg-white/10 transition-colors">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-      <!-- Scrollable body -->
-      <div id="legal-modal-body" class="overflow-y-auto px-7 py-6 flex-1 text-white/75 text-sm leading-relaxed space-y-5"></div>
-    </div>
-  </div>
-
   </div><!-- END LANDING VIEW -->
 
   <!-- ─── AUTH VIEW (shown after clicking Sign Up / Log In) ─── -->
@@ -1023,15 +1004,16 @@
   <!-- Right: Auth Form -->
   <div class="flex-1 flex flex-col bg-slate-50 dark:bg-slate-900 relative overflow-y-auto">
 
-    <!-- Mobile top bar: Back (left) + ConFlow logo (right) -->
-    <div class="lg:hidden flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700 flex-shrink-0 bg-slate-50 dark:bg-slate-900 sticky top-0 z-10">
-      <button onclick="backToLanding()" class="flex items-center gap-1.5 text-slate-500 hover:text-orange text-xs font-semibold transition-colors">
+    <!-- Mobile top bar: Back (left) · ConFlow wordmark centered · spacer (right) -->
+    <div class="lg:hidden relative flex items-center px-5 py-3 border-b border-slate-200 dark:border-slate-700 flex-shrink-0 bg-slate-50 dark:bg-slate-900 sticky top-0 z-10">
+      <button onclick="backToLanding()" class="flex items-center gap-1.5 text-slate-500 hover:text-orange text-xs font-semibold transition-colors z-10">
         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back
       </button>
-      <div class="flex items-center gap-2">
-        <img src="logomark-transparent.png" alt="ConFlow" style="height:30px; width:auto; filter: drop-shadow(0 1px 6px rgba(16,185,129,0.30));" draggable="false">
-        <img src="ConFlow-Wordmark.png" alt="ConFlow" style="height:16px; width:auto; display:block; align-self:flex-start;" draggable="false">
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <img src="ConFlow-Wordmark.png" alt="ConFlow" style="height:20px; width:auto; display:block;" draggable="false">
       </div>
+      <!-- spacer to balance back button -->
+      <div class="ml-auto w-10"></div>
     </div>
 
     <!-- Desktop back button -->
@@ -1160,6 +1142,23 @@
   </div><!-- END AUTH VIEW -->
 </div>
 <!-- END AUTH SCREEN -->
+
+<!-- ── Legal Modal — global, above everything ── -->
+<div id="legal-modal" onclick="if(event.target===this)closeLegalModal()"
+     class="hidden fixed inset-0 z-[600] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+  <div class="bg-[#0d1f38] border border-white/10 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col">
+    <div class="flex items-center justify-between px-7 py-5 border-b border-white/10 flex-shrink-0">
+      <div>
+        <h2 id="legal-modal-title" class="text-white font-extrabold text-xl"></h2>
+        <p class="text-white/40 text-xs mt-0.5">OpenFlow Ltd · Effective Date: 1 May 2026</p>
+      </div>
+      <button onclick="closeLegalModal()" class="p-2 rounded-xl text-white/50 hover:text-white hover:bg-white/10 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div id="legal-modal-body" class="overflow-y-auto px-7 py-6 flex-1 text-white/75 text-sm leading-relaxed space-y-5"></div>
+  </div>
+</div>
 
 <!-- ── App wrapper (hidden until logged in) ── -->
 <div id="app-screen" class="hidden flex-col min-h-screen">
