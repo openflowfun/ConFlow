@@ -706,7 +706,7 @@
           </div>
           <button onclick="openFeaturesSheet()" class="flex items-center gap-1.5 mx-auto text-white/50 hover:text-white text-[10px] font-semibold transition-colors">
             <i data-lucide="grid-2x2" class="w-3 h-3"></i>
-            See all 12 features
+            See all 12+ features
             <i data-lucide="chevron-up" class="w-3 h-3"></i>
           </button>
         </div>
@@ -817,7 +817,7 @@
       <div class="flex items-center justify-between px-5 py-3 border-b border-white/8 flex-shrink-0">
         <div>
           <h3 class="text-white font-extrabold text-base">Everything in ConFlow</h3>
-          <p class="text-white/40 text-[10px] mt-0.5">12 tools built for NZ builders</p>
+          <p class="text-white/40 text-[10px] mt-0.5">12+ tools built for NZ builders</p>
         </div>
         <button onclick="closeFeaturesSheet()" class="w-8 h-8 rounded-xl bg-white/8 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
           <i data-lucide="x" class="w-4 h-4"></i>
@@ -1030,8 +1030,8 @@
 
     <div class="w-full max-w-md">
 
-      <!-- Mobile logo -->
-      <div class="flex items-center mb-8 lg:hidden">
+      <!-- Mobile logo — sits below the absolute Back button -->
+      <div class="flex items-center mt-10 mb-6 lg:hidden">
         <img src="logomark-transparent.png" alt="ConFlow" style="height:40px; width:auto; filter: drop-shadow(0 1px 6px rgba(16,185,129,0.25));" draggable="false">
       </div>
 
@@ -1130,22 +1130,21 @@
             <i data-lucide="user-plus" class="w-4 h-4"></i> Create Account — Free Trial
           </button>
         </div>
-        <p class="text-center text-[11px] text-slate-400 mt-4">By signing up you agree to our <a href="#" class="text-orange hover:underline">Terms</a> &amp; <a href="#" class="text-orange hover:underline">Privacy Policy</a></p>
+        <p class="text-center text-[11px] text-slate-400 mt-4">By signing up you agree to our <button onclick="openLegalModal('terms')" class="text-orange hover:underline font-semibold">Terms</button> &amp; <button onclick="openLegalModal('privacy')" class="text-orange hover:underline font-semibold">Privacy Policy</button></p>
       </div>
 
-      <!-- Divider -->
-      <div class="flex items-center gap-3 my-5">
-        <div class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
-        <span class="text-xs text-slate-400 font-medium">or</span>
-        <div class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+      <!-- Divider + Demo — hidden on mobile -->
+      <div class="hidden sm:block">
+        <div class="flex items-center gap-3 my-5">
+          <div class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+          <span class="text-xs text-slate-400 font-medium">or</span>
+          <div class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+        </div>
+        <button onclick="demoLogin()" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-400 font-semibold text-sm hover:border-orange hover:text-orange transition-all">
+          <i data-lucide="zap" class="w-4 h-4"></i> Try Demo — No Sign Up Needed
+        </button>
+        <p class="text-center text-[11px] text-slate-400 mt-6">🇳🇿 Built for Christchurch Builders · ConFlow v1.0</p>
       </div>
-
-      <!-- Demo Mode -->
-      <button onclick="demoLogin()" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-400 font-semibold text-sm hover:border-orange hover:text-orange transition-all">
-        <i data-lucide="zap" class="w-4 h-4"></i> Try Demo — No Sign Up Needed
-      </button>
-
-      <p class="text-center text-[11px] text-slate-400 mt-6">🇳🇿 Built for Christchurch Builders · ConFlow v1.0</p>
     </div>
   </div>
 
