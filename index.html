@@ -193,14 +193,8 @@
     .card { transition: box-shadow 0.2s, transform 0.2s; }
     .card:hover { transform: translateY(-2px); }
 
-    /* ── OpenFlow brand gradient text ── */
-    .openflow-brand-text {
-      background: linear-gradient(90deg, #2563EB, #2DD4BF);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 700;
-    }
+    /* ── OpenFlow wordmark img ── */
+    .openflow-logo { height: 1.7em; width: auto; display: inline-block; vertical-align: middle; position: relative; top: -0.05em; }
 
     /* ── Invoice modal ── */
     #invoice-modal {
@@ -867,7 +861,7 @@
         </div>
         <a href="https://openflow.fun" target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
           <span class="text-white/30">Built by</span>
-          <span class="openflow-brand-text font-bold">OpenFlow</span>
+          <img src="openflow-wordmark.png" alt="openflow" class="openflow-logo" draggable="false">
           <span class="nz-flag-big" aria-hidden="true">🇳🇿</span>
         </a>
       </div>
@@ -1112,7 +1106,7 @@
       <!-- Dot indicators -->
       <div class="flex justify-center gap-1.5 mt-3" id="review-dots"></div>
       <!-- Built by -->
-      <p class="text-center text-white/30 text-[10px] font-semibold tracking-widest uppercase mt-4">Built by <span class="openflow-brand-text">OpenFlow</span></p>
+      <p class="text-center text-white/30 text-[10px] font-semibold tracking-widest uppercase mt-4">Built by <img src="openflow-wordmark.png" alt="openflow" class="openflow-logo" draggable="false"></p>
     </div>
   </div>
 
@@ -1789,7 +1783,7 @@
     <div class="px-4 pb-4 pt-3 border-t border-white/10 mt-1">
       <p class="text-white/60 text-[10px] text-center">ConFlow v1.0 · Christchurch, NZ 🇳🇿</p>
       <p class="text-white/40 text-[10px] text-center mt-1 font-semibold tracking-wide">
-        Built by <span class="openflow-brand-text">OpenFlow</span>
+        Built by <img src="openflow-wordmark.png" alt="openflow" class="openflow-logo" draggable="false">
       </p>
     </div>
 
@@ -10209,7 +10203,7 @@
     <!-- Footer -->
     <div class="px-6 pb-6 pt-2 border-t border-white/10 flex items-center justify-between">
       <p class="text-white/30 text-xs">ConFlow v1.0 · Christchurch, NZ 🇳🇿</p>
-      <p class="text-white/40 text-xs">Built by <span class="openflow-brand-text">OpenFlow</span></p>
+      <p class="text-white/40 text-xs">Built by <img src="openflow-wordmark.png" alt="openflow" class="openflow-logo" draggable="false"></p>
     </div>
 
   </div>
