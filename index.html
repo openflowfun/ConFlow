@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -393,6 +393,12 @@
         background-image: url('LandingPageSparky.jpg') !important;
       }
     }
+
+    /* ── DARK MODE ──────────────────────────────────── */
+    html.dark #navbar  { background: #0A2540 !important; box-shadow: none !important; border-bottom: 1px solid rgba(255,255,255,0.05) !important; }
+    html.dark #sidebar { background: #0A2540 !important; border-right: 1px solid rgba(255,255,255,0.05) !important; }
+    html.dark #app-screen { background: #050f1e !important; }
+    html.dark #app-screen main.flex-1 { background: #050f1e !important; }
 
     /* Mobile features bottom sheet */
     #features-sheet-panel {
@@ -1105,8 +1111,12 @@
       </div>
       <!-- Dot indicators -->
       <div class="flex justify-center gap-1.5 mt-3" id="review-dots"></div>
-      <!-- Built by -->
-      <p class="text-center text-white/30 text-[10px] font-semibold tracking-widest uppercase mt-4">Built by <img src="openflow-wordmark.png" alt="openflow" class="openflow-logo" draggable="false"></p>
+    </div>
+
+    <!-- Built by — pinned to bottom of left panel -->
+    <div class="relative z-10 flex items-center justify-center gap-1.5 pt-4">
+      <span class="text-white/30 text-[10px] font-semibold tracking-widest uppercase">Built by</span>
+      <img src="openflow-wordmark.png" alt="openflow" class="openflow-logo" draggable="false">
     </div>
   </div>
 
@@ -1324,7 +1334,13 @@
      NAVBAR
 ═══════════════════════════════════════════════ -->
 <header id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-navy dark:bg-navy-900 shadow-lg">
-  <div class="flex items-center justify-between h-16 px-4 lg:px-6">
+  <div class="relative flex items-center justify-between h-16 px-4 lg:px-6">
+
+    <!-- Center: Date & Time (desktop only, absolutely centered) -->
+    <div class="hidden lg:flex flex-col items-center absolute left-1/2 -translate-x-1/2 pointer-events-none select-none">
+      <div id="nav-time" class="text-white font-bold text-base leading-tight tracking-tight" style="font-variant-numeric: tabular-nums;"></div>
+      <div id="nav-date" class="text-white/50 text-[11px] font-medium leading-tight"></div>
+    </div>
 
     <!-- Left: Hamburger + Logo -->
     <div class="flex items-center gap-3">
@@ -1354,7 +1370,7 @@
 
       <!-- Alert Bell -->
       <div class="relative" id="notif-wrap">
-        <button onclick="toggleNotifDropdown()" class="relative p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors tooltip" data-tip="Notifications">
+        <button onclick="toggleNotifDropdown()" class="relative p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors">
           <i data-lucide="bell" class="w-5 h-5"></i>
           <span id="notif-dot" class="absolute top-1.5 right-1.5 w-2 h-2 bg-orange rounded-full alert-dot"></span>
         </button>
@@ -1365,7 +1381,7 @@
             <button onclick="clearAllNotifications()" class="text-[11px] text-orange hover:text-orange-600 font-semibold transition-colors">Clear all</button>
           </div>
           <div id="notif-list" class="max-h-80 overflow-y-auto divide-y divide-slate-50 dark:divide-slate-700">
-            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n1">
+            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n1" onclick="toggleNotifDropdown();navigateTo('invoices');">
               <div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <i data-lucide="alert-circle" class="w-4 h-4 text-red-500"></i>
               </div>
@@ -1376,7 +1392,7 @@
               </div>
               <span class="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0"></span>
             </div>
-            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n2">
+            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n2" onclick="toggleNotifDropdown();navigateTo('scheduling');">
               <div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <i data-lucide="truck" class="w-4 h-4 text-amber-500"></i>
               </div>
@@ -1387,7 +1403,7 @@
               </div>
               <span class="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0"></span>
             </div>
-            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n3">
+            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n3" onclick="toggleNotifDropdown();navigateTo('compliance');">
               <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <i data-lucide="shield" class="w-4 h-4 text-blue-500"></i>
               </div>
@@ -1398,7 +1414,7 @@
               </div>
               <span class="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0"></span>
             </div>
-            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n4">
+            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n4" onclick="toggleNotifDropdown();navigateTo('variations');">
               <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
               </div>
@@ -1408,7 +1424,7 @@
                 <p class="text-[10px] text-slate-400 mt-0.5">Yesterday</p>
               </div>
             </div>
-            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n5">
+            <div class="notif-item flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors cursor-pointer" data-id="n5" onclick="toggleNotifDropdown();navigateTo('scheduling');">
               <div class="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <i data-lucide="user-check" class="w-4 h-4 text-purple-500"></i>
               </div>
@@ -1424,14 +1440,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Dark/Light Toggle -->
-      <button id="theme-toggle"
-              aria-label="Toggle dark mode"
-              class="p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors tooltip" data-tip="Toggle theme">
-        <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
-        <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
-      </button>
 
       <!-- Avatar + Dropdown (click-based, no hover gap bug) -->
       <div class="relative" id="avatar-menu-wrap">
@@ -1820,7 +1828,7 @@
             Good morning, Hemi! 👋
           </h1>
           <div class="text-white/60 text-sm mt-0.5 flex items-center gap-1.5 flex-wrap">
-            <span id="dash-date"></span> · <span class="relative" id="attention-wrap">
+            <span class="relative" id="attention-wrap">
               <button onclick="toggleAttentionDropdown()" class="text-orange font-semibold hover:text-orange-600 transition-colors focus:outline-none flex items-center gap-1">
                 <span id="attention-count-text">0 items need your attention</span>
                 <i data-lucide="chevron-down" id="attention-chevron" class="w-3.5 h-3.5 transition-transform duration-200"></i>
@@ -3246,6 +3254,202 @@
         </button>
       </div>
 
+      <!-- ══════════════════════════════════════════════════
+           NZS 3604 AI COMPLIANCE CHECKER
+      ══════════════════════════════════════════════════ -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden mb-5">
+        <!-- Header -->
+        <div class="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <div class="w-9 h-9 rounded-xl bg-blue-500/15 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="scan-line" class="w-5 h-5 text-blue-500"></i>
+            </div>
+            <div>
+              <h2 class="font-extrabold text-navy dark:text-white text-base flex items-center gap-2">
+                NZS 3604 AI Compliance Checker
+                <span class="text-[9px] bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-bold px-2 py-0.5 rounded-full">Timber-framed Buildings</span>
+              </h2>
+              <p class="text-[11px] text-slate-400 mt-0.5">Referenced in B1/AS1 · Used in 93% of NZ light timber builds · Free download available</p>
+            </div>
+          </div>
+          <a href="https://www.standards.govt.nz/shop/nzs-36042011/" target="_blank" class="flex items-center gap-1.5 text-[11px] font-bold text-blue-500 hover:text-blue-600 transition-colors border border-blue-200 dark:border-blue-800 px-3 py-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+            <i data-lucide="download" class="w-3 h-3"></i> Download Free PDF
+          </a>
+        </div>
+
+        <div class="p-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <!-- LEFT: AI Photo Scanner -->
+          <div>
+            <p class="text-xs font-bold text-slate-600 dark:text-slate-300 mb-3 flex items-center gap-1.5"><i data-lucide="camera" class="w-3.5 h-3.5 text-orange"></i> Scan a Photo for Instant NZS 3604 Analysis</p>
+            <input type="file" id="nzs-photo-input" accept="image/*" capture="environment" class="hidden" onchange="nzs3604RunScan(this)">
+
+            <!-- Drop zone -->
+            <div id="nzs-dropzone" onclick="document.getElementById('nzs-photo-input').click()"
+                 class="border-2 border-dashed border-slate-200 dark:border-slate-600 rounded-2xl p-6 text-center cursor-pointer hover:border-orange/50 hover:bg-orange/5 transition-all group">
+              <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-orange/10 flex items-center justify-center group-hover:bg-orange/20 transition-colors">
+                <i data-lucide="camera" class="w-7 h-7 text-orange"></i>
+              </div>
+              <p class="text-sm font-bold text-navy dark:text-white mb-1">Take a photo or upload</p>
+              <p class="text-[11px] text-slate-400 mb-3">Framing · Foundation · Bracing · Roof connections · Fixings</p>
+              <button class="btn-orange text-white text-xs font-bold px-4 py-2 rounded-xl pointer-events-none">Scan for Compliance</button>
+            </div>
+
+            <!-- Scanning overlay (hidden) -->
+            <div id="nzs-scanning" class="hidden border-2 border-orange/30 rounded-2xl p-6 text-center bg-orange/5">
+              <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-orange/10 flex items-center justify-center">
+                <div class="w-6 h-6 border-2 border-orange border-t-transparent rounded-full animate-spin"></div>
+              </div>
+              <p class="text-sm font-bold text-navy dark:text-white mb-1">Analysing NZS 3604 compliance...</p>
+              <p class="text-[11px] text-slate-400">Checking framing, bracing, fixings &amp; ground conditions</p>
+            </div>
+
+            <!-- Results (hidden until scan) -->
+            <div id="nzs-results" class="hidden mt-3">
+              <div class="flex items-center justify-between mb-2">
+                <p class="text-xs font-bold text-navy dark:text-white">Analysis Results</p>
+                <button onclick="nzs3604Reset()" class="text-[10px] text-orange font-bold hover:underline">Scan another →</button>
+              </div>
+              <div id="nzs-result-items" class="space-y-2"></div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Quick Reference + Checkers -->
+          <div class="space-y-4">
+            <!-- Scope summary -->
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4">
+              <p class="text-xs font-extrabold text-blue-700 dark:text-blue-300 mb-2 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> NZS 3604:2011 Scope</p>
+              <div class="grid grid-cols-2 gap-1.5 text-[11px] text-blue-600 dark:text-blue-400">
+                <div class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-500 flex-shrink-0"></i> Up to 3 storeys (10m max)</div>
+                <div class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-500 flex-shrink-0"></i> "Good ground" sites only</div>
+                <div class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-500 flex-shrink-0"></i> Referenced in B1/AS1 &amp; E2/AS1</div>
+                <div class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-500 flex-shrink-0"></i> No structural engineer needed</div>
+                <div class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-500 flex-shrink-0"></i> Truss design excluded (specific design req.)</div>
+                <div class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-500 flex-shrink-0"></i> B2 Durability covered</div>
+              </div>
+            </div>
+
+            <!-- Quick Checkers -->
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <label class="text-[11px] font-bold text-slate-600 dark:text-slate-300 w-28 flex-shrink-0">Wind Zone</label>
+                <select id="nzs-wind-zone" onchange="nzs3604UpdateChecks()"
+                        class="flex-1 text-xs rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange/40">
+                  <option value="">Select wind zone...</option>
+                  <option value="low">Low — sheltered inland</option>
+                  <option value="medium">Medium — most suburban areas</option>
+                  <option value="high">High — coastal/elevated</option>
+                  <option value="very-high">Very High — exposed coast</option>
+                  <option value="extra-high">Extra High — mountains/ridges</option>
+                </select>
+              </div>
+              <div class="flex items-center gap-3">
+                <label class="text-[11px] font-bold text-slate-600 dark:text-slate-300 w-28 flex-shrink-0">Ground Type</label>
+                <select id="nzs-ground" onchange="nzs3604UpdateChecks()"
+                        class="flex-1 text-xs rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange/40">
+                  <option value="">Select ground type...</option>
+                  <option value="good">Good Ground (NZS 3604 applies)</option>
+                  <option value="TC1">TC1 — Low liquefaction risk (Canterbury)</option>
+                  <option value="TC2">TC2 — Medium risk (specific design req.)</option>
+                  <option value="TC3">TC3 — High risk (engineering required)</option>
+                  <option value="poor">Poor/Expansive soil (engineering required)</option>
+                </select>
+              </div>
+              <div class="flex items-center gap-3">
+                <label class="text-[11px] font-bold text-slate-600 dark:text-slate-300 w-28 flex-shrink-0">Storeys</label>
+                <select id="nzs-storeys" onchange="nzs3604UpdateChecks()"
+                        class="flex-1 text-xs rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange/40">
+                  <option value="">Select storeys...</option>
+                  <option value="1">1 storey</option>
+                  <option value="2">2 storeys</option>
+                  <option value="3">3 storeys (3rd must be within roof space)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dynamic compliance status -->
+            <div id="nzs-check-status" class="hidden rounded-xl border p-3 text-xs">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Checklist by NZS 3604 chapters -->
+        <div class="border-t border-slate-100 dark:border-slate-700 px-5 py-4">
+          <p class="text-xs font-bold text-navy dark:text-white mb-3">NZS 3604 Section Checklist</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+
+            <!-- Foundation & Subfloor -->
+            <div class="bg-slate-50 dark:bg-slate-700/40 rounded-xl p-3">
+              <div class="flex items-center gap-2 mb-2.5">
+                <div class="w-7 h-7 rounded-lg bg-amber-500/15 flex items-center justify-center"><i data-lucide="layers" class="w-3.5 h-3.5 text-amber-500"></i></div>
+                <span class="text-[11px] font-extrabold text-navy dark:text-white">Foundation &amp; Subfloor</span>
+              </div>
+              <div class="space-y-1.5">
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Good ground confirmed (Sect 1.3)</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Concrete slab reinforced to B1/AS1</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Foundation bolts M16 @ 1200mm crs</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Subfloor ventilation per Fig 5.2</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Holddowns to Table 8.20</span></label>
+              </div>
+            </div>
+
+            <!-- Bracing -->
+            <div class="bg-slate-50 dark:bg-slate-700/40 rounded-xl p-3">
+              <div class="flex items-center gap-2 mb-2.5">
+                <div class="w-7 h-7 rounded-lg bg-red-500/15 flex items-center justify-center"><i data-lucide="shield" class="w-3.5 h-3.5 text-red-500"></i></div>
+                <span class="text-[11px] font-extrabold text-navy dark:text-white">Bracing Design</span>
+              </div>
+              <div class="space-y-1.5">
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Wind bracing demand calculated (Sect 5)</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Seismic bracing demand (NZS 1170.5)</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">GIB Braceline or equiv. rated panels</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Bracing lines ≤6m apart</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Strap connections to slab per Table 8.5</span></label>
+              </div>
+            </div>
+
+            <!-- Wall Framing -->
+            <div class="bg-slate-50 dark:bg-slate-700/40 rounded-xl p-3">
+              <div class="flex items-center gap-2 mb-2.5">
+                <div class="w-7 h-7 rounded-lg bg-blue-500/15 flex items-center justify-center"><i data-lucide="square" class="w-3.5 h-3.5 text-blue-500"></i></div>
+                <span class="text-[11px] font-extrabold text-navy dark:text-white">Wall &amp; Post Framing</span>
+              </div>
+              <div class="space-y-1.5">
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Timber H1.2 treated minimum (NZS 3602)</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Stud size/spacing per Table 7.1</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Top plates doubled for loads</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Lintel spans per Table 7.3</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Post sizing per Table 7.11</span></label>
+              </div>
+            </div>
+
+            <!-- Roof Framing -->
+            <div class="bg-slate-50 dark:bg-slate-700/40 rounded-xl p-3">
+              <div class="flex items-center gap-2 mb-2.5">
+                <div class="w-7 h-7 rounded-lg bg-emerald-500/15 flex items-center justify-center"><i data-lucide="triangle" class="w-3.5 h-3.5 text-emerald-500"></i></div>
+                <span class="text-[11px] font-extrabold text-navy dark:text-white">Roof Framing</span>
+              </div>
+              <div class="space-y-1.5">
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Truss design by specific engineer</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Roof-to-wall straps per Table 8.19</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Rafter spans per Table 9.4</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Ceiling joist sizing per Table 9.21</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-3.5 h-3.5 accent-orange rounded flex-shrink-0"><span class="text-[10px] text-slate-600 dark:text-slate-300">Snow loading zone checked (if applicable)</span></label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Canterbury note -->
+          <div class="mt-3 flex items-start gap-2 bg-amber-50 dark:bg-amber-900/20 rounded-xl px-4 py-3">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5"></i>
+            <div>
+              <p class="text-[11px] font-bold text-amber-700 dark:text-amber-400">Canterbury Region: Ground subject to liquefaction (TC2/TC3) is excluded from NZS 3604 "good ground" definition. Specific engineering design required for TC2/TC3 sites.</p>
+              <a href="https://www.building.govt.nz/building-code-compliance/canterbury-rebuild/building-on-ground-with-liquefaction-potential" target="_blank" class="text-[10px] text-amber-600 dark:text-amber-400 underline font-medium">→ MBIE liquefaction guidance</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <!-- CCC Consents -->
         <div class="lg:col-span-2 space-y-4">
@@ -3385,7 +3589,7 @@
               <span class="text-[9px] bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-bold px-2 py-0.5 rounded-full">MBIE Official</span>
             </div>
             <div class="p-4 space-y-2">
-              <div class="bgovt-link" onclick="showToast('Opening building.govt.nz - NZ Building Code','slate')">
+              <div class="bgovt-link" onclick="window.open('https://www.building.govt.nz/building-code-compliance/','_blank');showToast('Opening NZ Building Code ↗','slate')">
                 <div class="w-7 h-7 rounded-lg bg-orange/10 flex items-center justify-center flex-shrink-0"><i data-lucide="book-open" class="w-3.5 h-3.5 text-orange"></i></div>
                 <div class="flex-1 min-w-0">
                   <p class="text-xs font-bold text-navy dark:text-white">NZ Building Code</p>
@@ -3393,7 +3597,7 @@
                 </div>
                 <i data-lucide="external-link" class="w-3 h-3 text-slate-400 flex-shrink-0"></i>
               </div>
-              <div class="bgovt-link" onclick="showToast('Opening Consenting guidance','slate')">
+              <div class="bgovt-link" onclick="window.open('https://www.building.govt.nz/getting-started/building-consent-process/','_blank');showToast('Opening Building Consents ↗','slate')">
                 <div class="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0"><i data-lucide="file-check-2" class="w-3.5 h-3.5 text-blue-500"></i></div>
                 <div class="flex-1 min-w-0">
                   <p class="text-xs font-bold text-navy dark:text-white">Building Consents</p>
@@ -3401,7 +3605,7 @@
                 </div>
                 <i data-lucide="external-link" class="w-3 h-3 text-slate-400 flex-shrink-0"></i>
               </div>
-              <div class="bgovt-link" onclick="showToast('Opening LBP register','slate')">
+              <div class="bgovt-link" onclick="window.open('https://www.lbp.govt.nz/find-an-lbp/','_blank');showToast('Opening LBP Register ↗','slate')">
                 <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-emerald-500"></i></div>
                 <div class="flex-1 min-w-0">
                   <p class="text-xs font-bold text-navy dark:text-white">LBP Licence Register</p>
@@ -3409,7 +3613,7 @@
                 </div>
                 <i data-lucide="external-link" class="w-3 h-3 text-slate-400 flex-shrink-0"></i>
               </div>
-              <div class="bgovt-link" onclick="showToast('Opening Acceptable Solutions','slate')">
+              <div class="bgovt-link" onclick="window.open('https://www.building.govt.nz/building-code-compliance/acceptable-solutions-and-verification-methods/','_blank');showToast('Opening Acceptable Solutions ↗','slate')">
                 <div class="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center flex-shrink-0"><i data-lucide="layers" class="w-3.5 h-3.5 text-purple-500"></i></div>
                 <div class="flex-1 min-w-0">
                   <p class="text-xs font-bold text-navy dark:text-white">Acceptable Solutions & Verification</p>
@@ -3417,7 +3621,7 @@
                 </div>
                 <i data-lucide="external-link" class="w-3 h-3 text-slate-400 flex-shrink-0"></i>
               </div>
-              <div class="bgovt-link" onclick="showToast('Opening Weathertight guidance','slate')">
+              <div class="bgovt-link" onclick="window.open('https://www.building.govt.nz/building-code-compliance/e-moisture/e2-external-moisture/','_blank');showToast('Opening E2 Weathertight Guide ↗','slate')">
                 <div class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0"><i data-lucide="droplets" class="w-3.5 h-3.5 text-amber-500"></i></div>
                 <div class="flex-1 min-w-0">
                   <p class="text-xs font-bold text-navy dark:text-white">Weathertight (E2) Guide</p>
@@ -3425,7 +3629,7 @@
                 </div>
                 <i data-lucide="external-link" class="w-3 h-3 text-slate-400 flex-shrink-0"></i>
               </div>
-              <div class="bgovt-link" onclick="showToast('Opening CCC application checklist','slate')">
+              <div class="bgovt-link" onclick="window.open('https://www.building.govt.nz/getting-started/building-consent-process/code-compliance-certificate/','_blank');showToast('Opening CCC Guide ↗','slate')">
                 <div class="w-7 h-7 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0"><i data-lucide="clipboard-check" class="w-3.5 h-3.5 text-red-500"></i></div>
                 <div class="flex-1 min-w-0">
                   <p class="text-xs font-bold text-navy dark:text-white">Code Compliance Certificate</p>
@@ -3457,7 +3661,7 @@
             <h2 class="font-extrabold text-navy dark:text-white text-base mb-3">Messages</h2>
             <div class="relative">
               <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-              <input type="text" placeholder="Search conversations…" class="w-full text-xs pl-8 pr-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/40">
+              <input id="chat-search" type="text" placeholder="Search conversations…" oninput="filterChatContacts(this.value)" class="w-full text-xs pl-8 pr-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/40">
             </div>
           </div>
           <!-- Contacts -->
@@ -4715,10 +4919,11 @@
                 <div>
                   <h3 class="text-sm font-bold text-navy dark:text-white mb-3">Change Password</h3>
                   <div class="space-y-3">
-                    <input type="password" placeholder="Current password" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange/40 transition">
-                    <input type="password" placeholder="New password (min 8 characters)" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange/40 transition">
-                    <input type="password" placeholder="Confirm new password" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange/40 transition">
-                    <button onclick="showToast('Password updated successfully! 🔒','green')" class="btn-orange text-white font-bold text-sm px-5 py-2.5 rounded-xl flex items-center gap-2">
+                    <input id="s-current-pwd" type="password" placeholder="Current password" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange/40 transition">
+                    <input id="s-new-pwd" type="password" placeholder="New password (min 8 characters)" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange/40 transition">
+                    <input id="s-confirm-pwd" type="password" placeholder="Confirm new password" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange/40 transition">
+                    <div id="s-pwd-error" class="hidden text-xs text-red-500 font-semibold px-1"></div>
+                    <button onclick="changePassword()" class="btn-orange text-white font-bold text-sm px-5 py-2.5 rounded-xl flex items-center gap-2">
                       <i data-lucide="key" class="w-4 h-4"></i> Update Password
                     </button>
                   </div>
@@ -6029,17 +6234,108 @@
   // ── Initialize Lucide Icons ──────────────────
   lucide.createIcons();
 
-  // ── Dark / Light Toggle ──────────────────────
-  const html         = document.documentElement;
-  const themeToggle  = document.getElementById('theme-toggle');
-  const savedTheme   = localStorage.getItem('cf-theme') || 'light';
-  html.classList.toggle('dark', savedTheme === 'dark');
+  // ── NZS 3604 Compliance Scanner ──────────────
+  function nzs3604RunScan(input) {
+    if (!input.files || !input.files[0]) return;
+    document.getElementById('nzs-dropzone').classList.add('hidden');
+    document.getElementById('nzs-scanning').classList.remove('hidden');
+    document.getElementById('nzs-results').classList.add('hidden');
 
-  themeToggle.addEventListener('click', () => {
-    const isDark = html.classList.toggle('dark');
-    localStorage.setItem('cf-theme', isDark ? 'dark' : 'light');
-    lucide.createIcons();
-  });
+    const simulatedResults = [
+      { status: 'pass',    icon: 'check-circle',   color: 'emerald', label: 'Wall framing', detail: 'Stud spacing 600mm — within NZS 3604 Table 7.1 limits for H1.2 timber' },
+      { status: 'pass',    icon: 'check-circle',   color: 'emerald', label: 'Bracing panel', detail: 'GIB Braceline detected — rated bracing element, fixings appear adequate' },
+      { status: 'warning', icon: 'alert-triangle', color: 'amber',   label: 'Top plate nailing', detail: 'Cannot confirm double top plate nailing pattern — verify skew nails at 150mm crs per Sect 7.4.2' },
+      { status: 'pass',    icon: 'check-circle',   color: 'emerald', label: 'Timber treatment', detail: 'H1.2 stamp visible — meets NZS 3602 durability requirements for interior framing' },
+      { status: 'fail',    icon: 'x-circle',       color: 'red',     label: 'Strapping visible', detail: 'No roof-to-wall strapping detected in frame — required per Table 8.19 for wind zone' },
+      { status: 'pass',    icon: 'check-circle',   color: 'emerald', label: 'Header/lintel', detail: 'LVL lintel over opening — span appears within NZS 3604 Table 7.3 limits' },
+    ];
+
+    setTimeout(() => {
+      document.getElementById('nzs-scanning').classList.add('hidden');
+      const resultsEl = document.getElementById('nzs-results');
+      const itemsEl   = document.getElementById('nzs-result-items');
+      const passes  = simulatedResults.filter(r => r.status === 'pass').length;
+      const warnings = simulatedResults.filter(r => r.status === 'warning').length;
+      const fails   = simulatedResults.filter(r => r.status === 'fail').length;
+
+      itemsEl.innerHTML = `
+        <div class="flex items-center gap-3 mb-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-700/40">
+          <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">${passes} Pass</span>
+          <span class="text-slate-300 dark:text-slate-600">|</span>
+          <span class="text-[11px] font-bold text-amber-600 dark:text-amber-400">${warnings} Warning</span>
+          <span class="text-slate-300 dark:text-slate-600">|</span>
+          <span class="text-[11px] font-bold text-red-600 dark:text-red-400">${fails} Fail</span>
+          <span class="ml-auto text-[10px] text-slate-400">AI analysis · NZS 3604:2011</span>
+        </div>
+        ${simulatedResults.map(r => `
+        <div class="flex items-start gap-2.5 p-2.5 rounded-xl border ${
+          r.status==='pass'    ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800' :
+          r.status==='warning' ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-100 dark:border-amber-800' :
+                                 'bg-red-50 dark:bg-red-900/20 border-red-100 dark:border-red-800'}">
+          <i data-lucide="${r.icon}" class="w-4 h-4 text-${r.color}-500 flex-shrink-0 mt-0.5"></i>
+          <div><p class="text-[11px] font-bold text-${r.color}-700 dark:text-${r.color}-300">${r.label}</p>
+          <p class="text-[10px] text-${r.color}-600 dark:text-${r.color}-400 mt-0.5">${r.detail}</p></div>
+        </div>`).join('')}`;
+
+      resultsEl.classList.remove('hidden');
+      lucide.createIcons();
+      showToast(`NZS 3604 scan: ${passes} pass · ${warnings} warning · ${fails} fail`, fails > 0 ? 'orange' : 'green');
+    }, 2800);
+  }
+
+  function nzs3604Reset() {
+    document.getElementById('nzs-dropzone').classList.remove('hidden');
+    document.getElementById('nzs-scanning').classList.add('hidden');
+    document.getElementById('nzs-results').classList.add('hidden');
+    document.getElementById('nzs-photo-input').value = '';
+  }
+
+  function nzs3604UpdateChecks() {
+    const wind    = document.getElementById('nzs-wind-zone').value;
+    const ground  = document.getElementById('nzs-ground').value;
+    const storeys = document.getElementById('nzs-storeys').value;
+    if (!wind && !ground && !storeys) return;
+
+    const statusEl = document.getElementById('nzs-check-status');
+    statusEl.classList.remove('hidden');
+
+    const issues = [];
+    if (ground === 'TC2' || ground === 'TC3' || ground === 'poor')
+      issues.push('⚠️ NZS 3604 does NOT apply — engineering design required for this ground type');
+    if (storeys === '3')
+      issues.push('⚠️ 3rd storey must be a part-storey within the roof space (max 10m height)');
+    if (wind === 'extra-high')
+      issues.push('ℹ️ Extra High wind zone: use higher bracing demand values and check fixings to Appendix A');
+    if (ground === 'TC1' || ground === 'good')
+      issues.push('✓ Ground type is within NZS 3604 scope');
+    if (wind && wind !== 'extra-high')
+      issues.push('✓ Wind zone — standard bracing tables apply');
+
+    const hasError = issues.some(i => i.startsWith('⚠️'));
+    statusEl.className = `rounded-xl border p-3 text-[11px] space-y-1 ${hasError
+      ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-700 dark:text-red-400'
+      : 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400'}`;
+    statusEl.innerHTML = issues.map(i => `<div>${i}</div>`).join('');
+  }
+
+  // ── Navbar Clock ─────────────────────────────
+  function updateNavClock() {
+    const now = new Date();
+    const timeEl = document.getElementById('nav-time');
+    const dateEl = document.getElementById('nav-date');
+    if (!timeEl || !dateEl) return;
+    // Time: 14:32
+    timeEl.textContent = now.toLocaleTimeString('en-NZ', { hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase();
+    // Date: Thursday 25 June 2026
+    dateEl.textContent = now.toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  updateNavClock();
+  setInterval(updateNavClock, 1000);
+
+  // ── Dark Mode (always on) ──────────────────────
+  const html = document.documentElement;
+  html.classList.add('dark');
+  html.classList.remove('light');
 
   // ── Avatar Dropdown (click-based, no hover gap) ──
   let avatarMenuOpen = false;
@@ -6373,15 +6669,11 @@
   const navBtns  = document.querySelectorAll('[data-section]');
 
   function switchSection(name) {
-    sections.forEach(s => {
-      s.classList.add('hidden');
-      s.classList.remove('section-panel');
-    });
+    sections.forEach(s => s.classList.add('hidden'));
     const target = document.getElementById('section-' + name);
     if (target) {
       target.classList.remove('hidden');
-      void target.offsetWidth;
-      target.classList.add('section-panel');
+      void target.offsetWidth; // trigger reflow for CSS animation
     }
     navBtns.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.section === name);
@@ -7106,24 +7398,12 @@
     const firstName = (name.split(' ')[0]) || 'there';
     const bannerName = document.getElementById('welcome-banner-name');
     if (bannerName) bannerName.textContent = 'Welcome ' + firstName + '!';
-    // Dynamic greeting + date in dashboard
+    // Dynamic greeting in dashboard
     const greetingEl = document.getElementById('dash-greeting');
-    const dateEl = document.getElementById('dash-date');
     if (greetingEl) {
       const hour = new Date().getHours();
       let greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
       greetingEl.textContent = greet + ', ' + firstName + '! 👋';
-    }
-    if (dateEl) {
-      function updateDashClock() {
-        const now  = new Date();
-        const date = now.toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-        const time = now.toLocaleTimeString('en-NZ', { hour: '2-digit', minute: '2-digit', timeZone: 'Pacific/Auckland' });
-        dateEl.innerHTML = date + ' <span style="opacity:0.55;font-size:0.82em;">' + time + ' NZT</span>';
-      }
-      updateDashClock();
-      if (window._dashClockInterval) clearInterval(window._dashClockInterval);
-      window._dashClockInterval = setInterval(updateDashClock, 30000);
     }
     // Always land on dashboard — force all sections hidden first, then show dashboard
     document.querySelectorAll('.section-panel').forEach(s => s.classList.add('hidden'));
@@ -7306,6 +7586,13 @@
 
   // ── Auth: Logout ─────────────────────────────
   function doLogout() {
+    // Save any unsaved data before logging out
+    if (_dataDirty && _currentUserEmail && _currentUserEmail !== 'demo@conflow.co.nz') {
+      saveUserData(_currentUserEmail);
+    }
+    _currentUserEmail = null;
+    _dataDirty = false;
+    isDemo = false;
     closeAvatarMenu();
     document.getElementById('app-screen').classList.add('hidden');
     document.getElementById('app-screen').classList.remove('flex');
@@ -7319,6 +7606,7 @@
     // Hide the welcome banner
     document.getElementById('welcome-banner').classList.add('hidden');
     document.body.classList.remove('has-banner');
+    document.body.style.overflow = '';
   }
 
   // ── Always start at landing page on load (no auto-login) ──
@@ -7711,6 +7999,19 @@
   let currentChatInitials = 'MK';
   let currentChatColor = 'bg-orange';
 
+  // ── Chat contact search ──────────────────────
+  function filterChatContacts(q) {
+    const lower = q.toLowerCase().trim();
+    const contacts = document.querySelectorAll('#section-chat .flex-1.overflow-y-auto button');
+    contacts.forEach(btn => {
+      const nameEl = btn.querySelector('p.font-bold');
+      const previewEl = btn.querySelector('p.text-slate-500, p.truncate');
+      const name    = nameEl    ? nameEl.textContent.toLowerCase()    : '';
+      const preview = previewEl ? previewEl.textContent.toLowerCase() : '';
+      btn.style.display = (!lower || name.includes(lower) || preview.includes(lower)) ? '' : 'none';
+    });
+  }
+
   function openChat(name, role, initials, colorClass) {
     currentChat = name;
     currentChatInitials = initials;
@@ -7795,18 +8096,23 @@
   function openInvoiceModal() {
     modal.classList.remove('modal-hidden');
     document.body.style.overflow = 'hidden';
+    // Clear client/project fields for fresh invoice
+    const clientEl  = document.getElementById('inv-client');
+    const projectEl = document.getElementById('inv-project');
+    if (clientEl)  clientEl.value  = '';
+    if (projectEl) projectEl.value = '';
     // Set default dates
     const today = new Date();
     const due   = new Date(today); due.setDate(today.getDate() + 20);
     document.getElementById('inv-date').value = today.toISOString().split('T')[0];
     document.getElementById('inv-due').value  = due.toISOString().split('T')[0];
-    // Seed 3 default line items if empty
+    // Always clear and seed 3 fresh default line items
     const container = document.getElementById('line-items-container');
-    if (container.children.length === 0) {
-      addLineItem('Labour – Framing & Structural', 40, 95);
-      addLineItem('Materials – Timber & Fixings', 1, 3200);
-      addLineItem('Plant Hire – Scaffold (7 days)', 7, 185);
-    }
+    container.innerHTML = '';
+    lineItemCount = 0;
+    addLineItem('Labour – Framing & Structural', 40, 95);
+    addLineItem('Materials – Timber & Fixings', 1, 3200);
+    addLineItem('Plant Hire – Scaffold (7 days)', 7, 185);
     updatePreview();
     lucide.createIcons();
   }
@@ -7943,13 +8249,6 @@
     document.getElementById('prev-progress-val').textContent  = fmt(progressAmt);
     document.getElementById('prev-total').textContent         = fmt(progressAmt);
     document.getElementById('retention-amt-label').textContent = useRetention ? '−' + fmt(retentionAmt) : '';
-  }
-
-  // ── Modal Action Buttons ─────────────────────
-  function saveDraft() {
-    const client = document.getElementById('inv-client').value || 'Unnamed Client';
-    closeInvoiceModal();
-    showToast(`Draft saved for ${client}`, 'slate');
   }
 
   function sendInvoice() {
@@ -8170,6 +8469,7 @@
       success: 'bg-emerald-500 text-white',
       error:   'bg-red-500 text-white',
       info:    'bg-navy text-white',
+      navy:    'bg-navy text-white',
     };
     const iconMap = {
       orange:  'check-circle',
@@ -8178,6 +8478,7 @@
       success: 'check-circle',
       error:   'x-circle',
       info:    'info',
+      navy:    'info',
     };
     const toast = document.createElement('div');
     toast.id = 'cf-toast';
@@ -9225,6 +9526,43 @@
   // ═══════════════════════════════════════════
   //  SETTINGS
   // ═══════════════════════════════════════════
+  function changePassword() {
+    const current  = document.getElementById('s-current-pwd')?.value || '';
+    const newPwd   = document.getElementById('s-new-pwd')?.value    || '';
+    const confirm  = document.getElementById('s-confirm-pwd')?.value || '';
+    const errEl    = document.getElementById('s-pwd-error');
+    if (errEl) errEl.classList.add('hidden');
+    // Demo user can't change password
+    if (_currentUserEmail === 'demo@conflow.co.nz') {
+      if (errEl) { errEl.textContent = 'Demo account password cannot be changed.'; errEl.classList.remove('hidden'); }
+      return;
+    }
+    if (!current || !newPwd || !confirm) {
+      if (errEl) { errEl.textContent = 'Please fill in all three fields.'; errEl.classList.remove('hidden'); }
+      return;
+    }
+    if (newPwd.length < 8) {
+      if (errEl) { errEl.textContent = 'New password must be at least 8 characters.'; errEl.classList.remove('hidden'); }
+      return;
+    }
+    if (newPwd !== confirm) {
+      if (errEl) { errEl.textContent = 'New passwords don\'t match.'; errEl.classList.remove('hidden'); }
+      return;
+    }
+    // Verify current password
+    const acc = checkAccount(_currentUserEmail, current);
+    if (!acc) {
+      if (errEl) { errEl.textContent = 'Current password is incorrect.'; errEl.classList.remove('hidden'); }
+      return;
+    }
+    // Update stored password
+    storeAccount(_currentUserEmail, newPwd, acc.name, acc.company, acc.initials);
+    document.getElementById('s-current-pwd').value = '';
+    document.getElementById('s-new-pwd').value     = '';
+    document.getElementById('s-confirm-pwd').value = '';
+    showToast('Password updated successfully 🔒', 'green');
+  }
+
   function switchSettingsTab(tab) {
     // Update left nav buttons
     document.querySelectorAll('[id^="stab-"]').forEach(btn => {
@@ -9335,9 +9673,13 @@
   }
 
   function navigateTo(section) {
-    document.querySelectorAll('.section-panel').forEach(s => s.classList.add('hidden'));
+    // Hide all section panels using the same static NodeList as switchSection
+    sections.forEach(s => s.classList.add('hidden'));
     const target = document.getElementById('section-' + section);
-    if (target) target.classList.remove('hidden');
+    if (target) {
+      target.classList.remove('hidden');
+      void target.offsetWidth; // trigger reflow for CSS animation
+    }
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     const navBtn = document.querySelector(`[data-section="${section}"]`);
     if (navBtn) navBtn.classList.add('active');
@@ -9571,7 +9913,19 @@
   }
 
   function openFolder(name) { showToast(`Opening: ${name} 📁`, 'slate'); }
-  function shareDoc(name)   { showToast(`Share link copied for: ${name} 🔗`, 'green'); }
+  function shareDoc(name) {
+    const link = `https://conflow.co.nz/docs/share/${encodeURIComponent(name).replace(/%20/g,'-').toLowerCase()}`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).then(() => showToast(`Link copied: ${name} 🔗`, 'green')).catch(() => showToast(`Share link copied for: ${name} 🔗`, 'green'));
+    } else {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = link; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); showToast(`Link copied: ${name} 🔗`, 'green'); } catch(e) { showToast(`Share link ready for: ${name} 🔗`, 'green'); }
+      document.body.removeChild(ta);
+    }
+  }
 
   function openDocUploadModal() {
     document.getElementById('doc-upload-modal').classList.remove('modal-hidden');
@@ -10074,31 +10428,13 @@
           <p class="text-white/40 text-[10px]">openflow.ink@gmail.com</p>
         </div>
       </a>
-      <a href="tel:+6433001234" class="flex items-center gap-3 bg-white/8 hover:bg-white/15 border border-white/10 rounded-2xl p-4 transition-all group">
+      <a href="tel:+64223135475" class="flex items-center gap-3 bg-white/8 hover:bg-white/15 border border-white/10 rounded-2xl p-4 transition-all group">
         <div class="w-9 h-9 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
           <i data-lucide="phone" class="w-4 h-4 text-green-400"></i>
         </div>
         <div>
           <p class="text-white text-xs font-semibold">Call Us</p>
-          <p class="text-white/40 text-[10px]">+64 3 300 1234</p>
-        </div>
-      </a>
-      <button onclick="showToast('Connecting to support...','info');setTimeout(()=>showToast('Support agent connected! Average wait: 2 min.','success'),2000);" class="flex items-center gap-3 bg-white/8 hover:bg-white/15 border border-white/10 rounded-2xl p-4 transition-all group text-left w-full">
-        <div class="w-9 h-9 rounded-xl bg-orange/20 flex items-center justify-center flex-shrink-0">
-          <i data-lucide="message-circle" class="w-4 h-4 text-orange"></i>
-        </div>
-        <div>
-          <p class="text-white text-xs font-semibold">Live Chat</p>
-          <p class="text-white/40 text-[10px]">Connect to support agent</p>
-        </div>
-      </button>
-      <a href="https://docs.conflow.co.nz" target="_blank" class="flex items-center gap-3 bg-white/8 hover:bg-white/15 border border-white/10 rounded-2xl p-4 transition-all group">
-        <div class="w-9 h-9 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-          <i data-lucide="book-open" class="w-4 h-4 text-purple-400"></i>
-        </div>
-        <div>
-          <p class="text-white text-xs font-semibold">Docs</p>
-          <p class="text-white/40 text-[10px]">Full documentation</p>
+          <p class="text-white/40 text-[10px]">+64 22 313 5475</p>
         </div>
       </a>
     </div>
